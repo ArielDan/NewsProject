@@ -47,7 +47,7 @@
     if (array.count > 0 ) {
         //添加定时器
         if (self.timer == nil) {
-            //[self addTimer];
+            [self addTimer];
         }
         
         //初始titlelbl
@@ -58,24 +58,38 @@
         
         //page数量
         self.page.numberOfPages = array.count;
-        
-        NSLog(@"%@",array);
     }
     
 }
 
 //#pragma mark - 添加定时器
-//-(void)addTimer{
-//    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(nextPage) userInfo:nil repeats:nil];
-//    
-//    [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-//    self.timer = timer;
-//}
+-(void)addTimer{
+    NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(nextPage) userInfo:nil repeats:YES];
+    
+    [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+    self.timer = timer;
+}
 
-//#pragma mark - 定时器下一页
-//-(void)nextPage{
-//    
-//}
+-(NSIndexPath *)resetIndexPath{
+    NSIndexPath *currentIndexPage = [[self.collectionView indexPathsForVisibleItems] lastObject];
+    NSIndexPath *currentIndexPageReset = [NSIndexPath indexPathForItem:currentIndexPage.item inSection:kMaxCount/2];
+    [self.collectionView scrollToItemAtIndexPath:currentIndexPageReset atScrollPosition:UICollectionViewScrollPositionLeft animated:NO];
+    return currentIndexPageReset;
+}
+
+#pragma mark - 定时器下一页
+-(void)nextPage{
+    NSIndexPath *currentIndexPageReset = [self resetIndexPath];
+    NSInteger item = currentIndexPageReset.item;
+    NSInteger sec = currentIndexPageReset.section;
+    item++;
+    if (item == self.array.count) {
+        item = 0;
+        sec++;
+    }
+    NSIndexPath *nextIndexPath = [NSIndexPath indexPathForItem:item inSection:sec];
+    [self.collectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionLeft animated:YES];
+}
 
 #pragma mark - 添加collectionViw
 -(void)addCollection{

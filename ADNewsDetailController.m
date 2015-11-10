@@ -35,17 +35,9 @@
 
 
 -(void)viewWillAppear:(BOOL)animated{
-    //    NSMutableArray *getDocid = [[NSMutableArray alloc] init];
-    //    getDocid = [mainController.newsDetail valueForKey:@"docid"];
-    //
-    //    NSLog(@"get::%@",getDocid);
-    //_getNews = [NSString stringWithFormat:@"%@",mainController.getNews];
-    //NSLog(@"%@",_getNews);
-    
     
     NSString *urlStr = [NSString stringWithFormat:@"http://c.m.163.com/nc/article/%@/full.html",_getNews];
-    //    NSLog(@"%@",urlStr);
-    //
+
     //    NSString *escapedURL = [urlStr stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     //
     //    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:escapedURL]];
@@ -54,8 +46,7 @@
 
     
     NSString *url = [[NSString alloc] initWithString:[GetDataInterfaceJSON getDataWithRequest:urlStr]];
-    
-    //NSLog(@"%@",url);
+
     //对象序列化
     NSData *jsonData = [url dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *new = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableLeaves error:nil];
@@ -116,7 +107,7 @@
 
     //CGRect bounds = [[UIScreen mainScreen]applicationFrame];
 
-    _webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, self.navigationController.navigationBar.frame.size.height + 20, self.view.frame.size.width, self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height)];
+    _webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, self.navigationController.navigationBar.frame.size.height + 20, self.view.frame.size.width, self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height-self.tabBarController.tabBar.frame.size.height)];
     [self.view addSubview:_webView];
     _webView.delegate = self;
     
