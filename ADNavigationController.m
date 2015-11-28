@@ -50,7 +50,6 @@ static ADNavigationController *instance;
     [leftBtn setImageEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 10)];
     vc.navigationItem.leftBarButtonItem = left;
     
-    
     //[vc addChildViewController:nav];
 }
 
@@ -86,7 +85,6 @@ static ADNavigationController *instance;
         //[self.navController.view addSubview:cover];
         [self.view addSubview:cover];
     }];
-    NSLog(@"leftClick");
 }
 
 #pragma mark - 左侧边栏点击的代理方法

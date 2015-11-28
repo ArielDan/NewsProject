@@ -168,8 +168,7 @@
         detailModel.pixel = [_detail.img[i] valueForKey:@"pixel"];
         detailModel.ref = [_detail.img[i] valueForKey:@"ref"];
         detailModel.src = [_detail.img[i] valueForKey:@"src"];
-        NSLog(@"%@",[_detail.img[i] valueForKey:@"pixel"]);
-        NSLog(@"%@",_detail.img);
+
         //数组存放被切割的像素
         NSArray *pixel = [detailModel.pixel componentsSeparatedByString:@"*"];
         CGFloat width = [[pixel firstObject] floatValue];
@@ -193,7 +192,7 @@
         
         [imgHtml appendString:@"</div>"];
         
-        NSLog(@"imgHtml:%@",imgHtml);
+    
         
         //替换标记
         [html replaceOccurrencesOfString:detailModel.ref withString:imgHtml options:NSCaseInsensitiveSearch range:NSMakeRange(0, html.length)];
@@ -208,8 +207,7 @@
     [html appendString:@"</html>"];
 
     [_webView loadHTMLString:html baseURL:nil];
-    
-    NSLog(@"%@",html);
+
     
     //将httml文件读取为字符串，其中baseURL是我们自己设置的一个路径，用于寻找html文件中引用的图片等素材
 }

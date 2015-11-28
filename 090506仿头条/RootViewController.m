@@ -16,6 +16,7 @@
 #import "ADTabBarController.h"
 
 #import "FoundViewController.h"
+#import "ADChoiceController.h"
 #import "ReadViewController.h"
 #import "MeViewController.h"
 #import "WatchViewController.h"
@@ -48,7 +49,8 @@
     
     ViewController *viewController = [[ViewController alloc] init];
     MeViewController *meController = [[MeViewController alloc] init];
-    FoundViewController *foundController = [[FoundViewController alloc] init];
+    ADChoiceController *choiceController = [[ADChoiceController alloc] init];
+    //FoundViewController *foundController = [[FoundViewController alloc] init];
     ReadViewController *readController = [[ReadViewController alloc] init];
     WatchViewController *watchController = [[WatchViewController alloc] init];
     
@@ -56,8 +58,10 @@
     [nav0 setUpController:viewController title:@"新闻"];
     ADNavigationController *nav1 = [[ADNavigationController alloc] initWithRootViewController:readController];
     [nav1 setUpController:readController title:@"阅读"];
-    ADNavigationController *nav2 = [[ADNavigationController alloc] initWithRootViewController:foundController];
-    [nav2 setUpController:foundController title:@"发现"];
+//    ADNavigationController *nav2 = [[ADNavigationController alloc] initWithRootViewController:foundController];
+//    [nav2 setUpController:foundController title:@"发现"];
+    ADNavigationController *nav2 = [[ADNavigationController alloc] initWithRootViewController:choiceController];
+    [nav2 setUpController:choiceController title:@"发现"];
     ADNavigationController *nav4 = [[ADNavigationController alloc] initWithRootViewController:meController];
     [nav4 setUpController:meController title:@"我"];
     
@@ -172,7 +176,7 @@
         //[self.navController.view addSubview:cover];
         [self.navController.view addSubview:cover];
     }];
-    NSLog(@"leftClick");
+   
 }
 
 #pragma mark - 左侧边栏点击的代理方法

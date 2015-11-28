@@ -146,7 +146,7 @@
     //箭头
     CGFloat arrowW = 30;
     CGFloat arrowH = arrowW;
-    NSLog(@"count:%d",btnCount);
+   
     for (int i = 0; i < btnCount; i++) {
         UIButton *btn = self.btnArray[i];
         btn.width = btnW;
