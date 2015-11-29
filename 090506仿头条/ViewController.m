@@ -233,7 +233,7 @@ static ViewController *instance;
     
 }
 #pragma mark 头部视图的代理方法
-#warning 头部视图代理方法
+#warning 头部视图代理方法--点击
 -(void)headerView:(ADNewsHeaderView *)headerView news:(ADNews *)news{
     
 }
@@ -359,15 +359,7 @@ static ViewController *instance;
     
     //_weatherModal = [[ADWeatherModal alloc] init];
     ADWeatherModal *modal = [[ADWeatherModal alloc] init];
-//    _weatherModal.date = [weatherInfo objectForKey:@"date"];
-//    _weatherModal.wind = [weatherInfo objectForKey:@"wind"];
-//    _weatherModal.climate = [weatherInfo objectForKey:@"climate"];
-//    _weatherModal.dt = [weatherInfo objectForKey:@"dt"];
-//    _weatherModal.PM2d5 = [weatherInfo objectForKey:@"pm2d5"];
-//    _weatherModal.temperature = [weatherInfo objectForKey:@"temperature"];
-    //_weatherModal.nongLi  = [weatherInfo objectForKey:@"nongli"];
-    //[_weatherModal setValue:[weatherInfo objectForKey:@"nongli"] forKey:@"nongli"];
-    
+
     //[modal setValue:[weatherInfo objectForKey:@"nongli"] forKey:@"nongli"];
     [modal setValue:[weatherInfo objectForKey:@"climate"] forKey:@"climate"];
     [modal setValue:[weatherInfo objectForKey:@"date"] forKey:@"date"];
@@ -438,6 +430,7 @@ static ViewController *instance;
         ADNewsTableViewCell *cell = [[ADNewsTableViewCell alloc] init];
         [_cellHeight addObject:cell];
     }];
+    
     //取前五个放入头部视图
     NSRange range = NSMakeRange(0, 5);
     self.headerView.array = [_newsDetail subarrayWithRange:range];

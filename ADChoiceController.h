@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ADChoiceController : UITableViewController
+@interface ADChoiceController : UITableViewController<UITableViewDataSource,UITableViewDelegate>
 
 +(instancetype)getInstance;
 

@@ -18,6 +18,8 @@
 #import "ADGroupsModel.h"
 #import "ADGoodsFrame.h"
 
+#import "ADChoiceCell.h"
+
 #define kURL @"http://v.higo.meilishuo.com/goods/goods_discover"
 
 static ADChoiceController *instance;
@@ -28,7 +30,7 @@ static ADChoiceController *instance;
 
 @property(nonatomic,strong) ADTitleView *titleView;
 @property(nonatomic,strong) ADGroupsModel *model;
-@property(nonatomic,weak) NSMutableArray *arrFrame;
+@property(nonatomic,strong) NSMutableArray *arrFrame;
 
 @end
 
@@ -45,11 +47,16 @@ static ADChoiceController *instance;
 }
 
 -(void)viewDidLoad{
-    [super viewDidLoad];
-    instance = self;
     
-    [self setupTitleView];
+    [super viewDidLoad];
+    
+    instance = self;
     [self sendRequest];
+    [self setupTitleView];
+    
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    
 }
 
 -(void)setupTitleView{
@@ -61,15 +68,6 @@ static ADChoiceController *instance;
     
     self.titleView = titleView;
 }
--(void)setupTableView{
-    UITableView *tableView = [[UITableView alloc] init];
-    tableView.frame = self.view.bounds;
-    tableView.delegate = self;
-    tableView.dataSource = self;
-    [self.view addSubview:tableView];
-    self.tableView = tableView;
-    
-}
 
 #pragma mark - 发送网络请求，获取数据
 
@@ -79,58 +77,47 @@ static ADChoiceController *instance;
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    
+    // 网络访问是异步的,回调是主线程的,因此程序员不用管在主线程更新UI的事情
     [manager GET:urlStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSMutableArray *arr = [[NSMutableArray alloc] init];
         
         NSArray *list = responseObject[@"data"][@"goods_list"];
-        
 //        for (ADGroupsModel *goodsModel in list) {
+//            NSLog(@"%@",goodsModel.goods_desc);
 //            
 //            ADGoodsFrame *frame = [[ADGoodsFrame alloc] init];
 //            //传递模型
-//            frame.goodsModel = goodsModel;
-//            
+//            frame.goodsModel = goodsModel;           
 //            [arr addObject:frame];
 //        }
 //        
 //        [self.arrFrame addObjectsFromArray:arr];
 //        
-//        NSLog(@"%@",self.arrFrame);
-//        
 //        [self.tableView reloadData];
         [list enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            
-            NSMutableArray *arr = [[NSMutableArray alloc] init];
-            
             //商品展示数据
-            ADGroupsModel *model = [[ADGroupsModel alloc] init];
+            ADGroupsModel *model = [[ADGroupsModel alloc] init];;
             [model setValue:obj[@"goods_name"] forKey:@"goods_name"];
             [model setValue:obj[@"goods_id"] forKey:@"goods_id"];
             [model setValue:obj[@"goods_desc"] forKey:@"goods_desc"];
             [model setValue:obj[@"goods_display_final_price"] forKey:@"goods_display_final_price"];
             [model setValue:obj[@"main_image"] forKey:@"goods_image"];
-            
+            //[model setValuesForKeysWithDictionary:obj];
             
             ADGoodsFrame *frame = [[ADGoodsFrame alloc] init];
             frame.goodsModel = model;
             
-//            for (ADImageModel *image in model.goods_image) {
-//                frame.goodsModel.image = image;
-//            }
-            
-            
-           // NSLog(@"%@",frame.goodsModel.image);
             _model = model;
-            //[model setValuesForKeysWithDictionary:obj];
-            
-            [arr addObject:frame];
-            
+            //frame模型添加至数组
+            [self.arrFrame addObject:frame];
         }];
-        [self.arrFrame addObjectsFromArray:arr];
         
+        NSLog(@"%d",self.arrFrame.count);
+        [self.tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);
     }];
+    
 }
 
 #pragma mark titleView代理方法
@@ -139,12 +126,25 @@ static ADChoiceController *instance;
     [self presentViewController:controller animated:YES completion:nil];
 }
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    
     return 1;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
     return self.arrFrame.count;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    static NSString *indentifier = @"cell";
+    [self.tableView registerClass:[ADChoiceCell class] forCellReuseIdentifier:indentifier];
+    
+    ADChoiceCell *cell = [self.tableView dequeueReusableCellWithIdentifier:indentifier forIndexPath:indexPath];
+    if (cell == nil) {
+        cell = [[ADChoiceCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
+    }
+    
+    cell.goodsFrame = self.arrFrame[indexPath.row];
+    return cell;
     
 }
 

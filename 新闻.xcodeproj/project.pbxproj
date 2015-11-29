@@ -105,6 +105,7 @@
 		E7F363A11BF611B3003C710F /* ADHttpTool.m in Sources */ = {isa = PBXBuildFile; fileRef = E7F363A01BF611B3003C710F /* ADHttpTool.m */; };
 		E7F910B61C05AB9D0097BA8C /* ADGoodImageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = E7F910B51C05AB9D0097BA8C /* ADGoodImageModel.m */; };
 		E7F910B91C098CAB0097BA8C /* ADChoiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E7F910B81C098CAB0097BA8C /* ADChoiceCell.m */; };
+		E7F910BC1C098DC60097BA8C /* ADChoiceShowView.m in Sources */ = {isa = PBXBuildFile; fileRef = E7F910BB1C098DC60097BA8C /* ADChoiceShowView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -296,6 +297,8 @@
 		E7F910B51C05AB9D0097BA8C /* ADGoodImageModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADGoodImageModel.m; sourceTree = "<group>"; };
 		E7F910B71C098CAB0097BA8C /* ADChoiceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADChoiceCell.h; sourceTree = "<group>"; };
 		E7F910B81C098CAB0097BA8C /* ADChoiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADChoiceCell.m; sourceTree = "<group>"; };
+		E7F910BA1C098DC50097BA8C /* ADChoiceShowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADChoiceShowView.h; sourceTree = "<group>"; };
+		E7F910BB1C098DC60097BA8C /* ADChoiceShowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADChoiceShowView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -686,8 +689,6 @@
 				E7F363841BF5FD38003C710F /* ADGoodsFrame.m */,
 				E7F910B41C05AB9D0097BA8C /* ADGoodImageModel.h */,
 				E7F910B51C05AB9D0097BA8C /* ADGoodImageModel.m */,
-				E7F910B71C098CAB0097BA8C /* ADChoiceCell.h */,
-				E7F910B81C098CAB0097BA8C /* ADChoiceCell.m */,
 			);
 			name = "精选model";
 			sourceTree = "<group>";
@@ -697,6 +698,10 @@
 			children = (
 				E7F363871BF609B1003C710F /* ADChoiceView.h */,
 				E7F363881BF609B1003C710F /* ADChoiceView.m */,
+				E7F910BA1C098DC50097BA8C /* ADChoiceShowView.h */,
+				E7F910BB1C098DC60097BA8C /* ADChoiceShowView.m */,
+				E7F910B71C098CAB0097BA8C /* ADChoiceCell.h */,
+				E7F910B81C098CAB0097BA8C /* ADChoiceCell.m */,
 			);
 			name = view;
 			sourceTree = "<group>";
@@ -923,6 +928,7 @@
 				E78199E61BCF7C8A00D3ECA2 /* MJRefreshFooter.m in Sources */,
 				E7D912A01BC798CE006BE125 /* GetDataInterfaceJSON.m in Sources */,
 				E7819A1C1BDF7D5E00D3ECA2 /* FoundViewController.m in Sources */,
+				E7F910BC1C098DC60097BA8C /* ADChoiceShowView.m in Sources */,
 				E7819A331BEA2B4A00D3ECA2 /* ADHeaderCell.m in Sources */,
 				E78199E31BCF7C8A00D3ECA2 /* MJRefreshAutoFooter.m in Sources */,
 				E7341BB51BA510B300B8BA0A /* ADWheatherView.m in Sources */,

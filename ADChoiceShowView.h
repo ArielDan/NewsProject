@@ -1,5 +1,5 @@
 //
-//  ADChoiceCell.h
+//  ADChoiceShowView.h
 //  新闻
 //
 //  Created by csip on 15/11/28.
@@ -9,9 +9,8 @@
 #import <UIKit/UIKit.h>
 @class ADGoodsFrame;
 
-@interface ADChoiceCell : UITableViewCell
+@interface ADChoiceShowView : UIView
 
-@property(nonatomic,strong) ADGoodsFrame *goodsFrame;
-
+@property(nonatomic,strong) ADGoodsFrame *frame;
 
 @end

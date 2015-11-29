@@ -28,7 +28,7 @@
         CGFloat imageH=kMoreImageH;
         _imageF=CGRectMake(imageX, imageY, imageW, imageH);
     };
-    NSLog(@"%@",goodsModel.goods_image);
+   // NSLog(@"%d",goodsModel.goods_image.count);
     if (goodsModel.goods_image.count>1) {
         //1.第一张图片的frame
         frame();
