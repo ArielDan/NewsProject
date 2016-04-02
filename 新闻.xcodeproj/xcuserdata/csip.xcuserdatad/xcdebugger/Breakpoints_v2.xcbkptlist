@@ -164,11 +164,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ADChoiceCell.m"
-            timestampString = "470486657.950174"
+            timestampString = "481275795.214475"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
             landmarkName = "-setGoodsFrame:"
             landmarkType = "5">
          </BreakpointContent>

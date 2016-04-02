@@ -8,10 +8,11 @@
 
 #import "ADNavigationController.h"
 #import "ADLeftMenu.h"
+#import "ADNavigationBar.h"
 
 static ADNavigationController *instance;
 
-@interface ADNavigationController()
+@interface ADNavigationController()<ViewTransformDelegate>
 
 @property(nonatomic,strong) ADLeftMenu *leftMenu;
 
@@ -32,7 +33,11 @@ static ADNavigationController *instance;
     
     bar.shadowImage=[[UIImage alloc]init];  //隐藏掉导航栏底部的那条线
     
-    
+}
+-(void)viewDidLoad{
+    ADNavigationBar *navBar = [[ADNavigationBar alloc] initWithFrame:self.navigationBar.frame];
+    navBar.transDelegate = self;
+    [self.view addSubview:navBar];
 }
 
 -(void)setUpController:(UIViewController *)vc title:(NSString *)title{
@@ -73,8 +78,9 @@ static ADNavigationController *instance;
         CGFloat leftMargin = kScreenW * (1- scale)*0.5;
         CGFloat translateX = (kLeftMenuW - leftMargin)/scale;
         //设置移动  缩放
-        CGAffineTransform scaleForm = CGAffineTransformMakeScale(scale, scale);
+        CGAffineTransform scaleForm = CGAffineTransformMakeScale(scale, scale);//缩放
         CGAffineTransform translateForm = CGAffineTransformTranslate(scaleForm, translateX, 0);
+        
         //self.navigationController.view.transform = translateForm;
         self.view.transform = translateForm;
         //创建一个按钮覆盖首页

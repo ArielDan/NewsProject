@@ -112,7 +112,7 @@ static ADChoiceController *instance;
             [self.arrFrame addObject:frame];
         }];
         
-        NSLog(@"%d",self.arrFrame.count);
+        
         [self.tableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error);

@@ -51,18 +51,18 @@
     
 }
 
--(void)setFrame:(ADGoodsFrame *)frame{
-    _frame = frame;
-    //设置第一张大图
-    
-
-    NSData* (^img)(void) = ^NSData*(void){
-        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[frame.goodsModel.goods_image valueForKey:@"image_original"]]];
-        return imageData;
-    };
-    self.bigImage.image = [UIImage imageWithData:img()];
-    
-    
-}
+//-(void)setFrame:(ADGoodsFrame *)frame{
+//    _frame = frame;
+//    //设置第一张大图
+//    
+//
+//    NSData* (^img)(void) = ^NSData*(void){
+//        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[frame.goodsModel.goods_image valueForKey:@"image_original"]]];
+//        return imageData;
+//    };
+//    self.bigImage.image = [UIImage imageWithData:img()];
+//    
+//    
+//}
 
 @end
