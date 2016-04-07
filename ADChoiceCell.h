@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 @class ADGoodsFrame;
+@class ADGroupsModel;
 
 @interface ADChoiceCell : UITableViewCell
 
 @property(nonatomic,strong) ADGoodsFrame *goodsFrame;
-
+@property(nonatomic,strong) ADGroupsModel *groupModel;
 
 @end

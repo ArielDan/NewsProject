@@ -60,6 +60,12 @@
 #pragma mark - 代理方法
 -(void)changeSelectedIndexFrom:(NSInteger)from To:(NSInteger)to{
     self.selectedIndex = to;
+//    ADNavigationController *nav = [ADNavigationController getInstance];
+//    if (to != 2) {
+//        nav.hideTitleViewBlock();
+//    }else{
+//        nav.showTitleViewBlock();
+//    }
 }
 
 @end

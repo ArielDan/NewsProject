@@ -9,10 +9,14 @@
 #import "ADNavigationController.h"
 #import "ADLeftMenu.h"
 #import "ADNavigationBar.h"
+#import "FoundViewController.h"
+#import "ADTitleView.h"
+
+#import "ADFindController.h"
 
 static ADNavigationController *instance;
 
-@interface ADNavigationController()<ViewTransformDelegate>
+@interface ADNavigationController()<ViewTransformDelegate,ADTitleViewDelegate>
 
 @property(nonatomic,strong) ADLeftMenu *leftMenu;
 
@@ -27,6 +31,7 @@ static ADNavigationController *instance;
 +(void)initialize{
     
     
+    
     UINavigationBar *bar = [UINavigationBar appearance];
     
     [bar setBarTintColor:[UIColor redColor]];
@@ -35,9 +40,32 @@ static ADNavigationController *instance;
     
 }
 -(void)viewDidLoad{
+    instance = self;
     ADNavigationBar *navBar = [[ADNavigationBar alloc] initWithFrame:self.navigationBar.frame];
     navBar.transDelegate = self;
     [self.view addSubview:navBar];
+    
+    //定义block
+//    __weak typeof(ADNavigationController) *weakSelf = self;
+//    self.hideTitleViewBlock = ^(){
+//        weakSelf.titleView.hidden = YES;
+//    };
+//    self.showTitleViewBlock = ^(){
+//        weakSelf.titleView.hidden = NO;
+//    };
+//
+//    ADTitleView *titleView = [[ADTitleView alloc] init];
+//    titleView.frame = CGRectMake(0, 0, self.view.frame.size.width, 64);
+//    //self.navigationItem.titleView = titleView;
+////    FoundViewController *foundVC = [[FoundViewController alloc] init];
+////    
+////    titleView.delegate = foundVC;
+//    
+//    [self.view addSubview:titleView];
+//    titleView.hidden = YES;
+//    self.titleView = titleView;
+
+    
 }
 
 -(void)setUpController:(UIViewController *)vc title:(NSString *)title{
@@ -128,12 +156,29 @@ static ADNavigationController *instance;
     
     
 }
+#pragma mark titleView代理方法
+-(void)titleView:(ADTitleView *)titleView pushController:(UIViewController *)controller{
+        //[self.navigationController pushViewController:controller animated:YES];
+    if ([NSStringFromClass([controller class]) isEqualToString:@"ADFindController"]) {
+      
+    
+        [self pushViewController:controller animated:YES];
+    }else{
+        [self presentViewController:controller animated:NO completion:nil];
+   
+    }
+
+}
 
 
-
-
-
-
-
+//-(void)addControllerTitleView{
+//    ADTitleView *titleView = [[ADTitleView alloc] init];
+//    titleView.frame = CGRectMake(0, 0, self.view.frame.size.width, 40);
+//    //self.navigationItem.titleView = titleView;
+//   
+//    titleView.delegate = self;
+//    [self.view addSubview:titleView];
+//    self.titleView = titleView;
+//}
 
 @end

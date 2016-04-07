@@ -29,10 +29,10 @@
         _imageF=CGRectMake(imageX, imageY, imageW, imageH);
     };
    // NSLog(@"%d",goodsModel.goods_image.count);
-    if (goodsModel.goods_image.count>1) {
-        //1.第一张图片的frame
-        frame();
-    }else{
+//    if (goodsModel.goods_image.count<1) {
+//        //1.第一张图片的frame
+//        frame();
+//    }else{
         frame();
         //标签文字frame
         CGFloat labelOriginW = kScreenW - 20;
@@ -47,7 +47,8 @@
         
         _cellH = CGRectGetMaxY(_addressF)+20;
         
-    }
+    
+    
 }
 
 

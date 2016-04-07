@@ -430,11 +430,20 @@ static ViewController *instance;
         ADNewsTableViewCell *cell = [[ADNewsTableViewCell alloc] init];
         [_cellHeight addObject:cell];
     }];
-    
-    //取前五个放入头部视图
-    NSRange range = NSMakeRange(0, 5);
-    self.headerView.array = [_newsDetail subarrayWithRange:range];
-    //self.headerView.array = _newsDetail;
+    if (_newsDetail.count == 0) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.label.text = @"网络请求失败";
+        hud.margin = 10.f;
+        hud.removeFromSuperViewOnHide = YES;
+        [hud hideAnimated:YES afterDelay:5];
+    }else{
+        //取前五个放入头部视图
+        NSRange range = NSMakeRange(0, 5);
+        self.headerView.array = [_newsDetail subarrayWithRange:range];
+        //self.headerView.array = _newsDetail;
+    }
+   
 
 }
 

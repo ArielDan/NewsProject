@@ -9,11 +9,13 @@
 #import "RootViewController.h"
 #import "ViewController.h"
 #import "ADLeftMenu.h"
+#import "ADTitleView.h"
 
 #import "UIView+Frame.h"
 #import "UIBarButtonItem+ADInit.h"
 #import "ADNavigationController.h"
 #import "ADTabBarController.h"
+#import "ADNavigationBar.h"
 
 #import "FoundViewController.h"
 #import "ADChoiceController.h"
@@ -53,13 +55,16 @@
     ViewController *viewController = [[ViewController alloc] init];
     MeViewController *meController = [[MeViewController alloc] init];
     ADChoiceController *choiceController = [[ADChoiceController alloc] init];
-    //FoundViewController *foundController = [[FoundViewController alloc] init];
+    
+    FoundViewController *foundController = [[FoundViewController alloc] init];
     ReadViewController *readController = [[ReadViewController alloc] init];
     WatchViewController *watchController = [[WatchViewController alloc] init];
     
     ADNavigationController *navVC = [[ADNavigationController alloc] initWithRootViewController:tabBarController];
-    
-    tabBarController.viewControllers = @[viewController,meController, choiceController,readController,watchController];
+ //   navVC.viewControllers = @[viewController,readController,choiceController,foundController,watchController,meController];
+    //navVC.titleView.delegate = foundController;
+    tabBarController.viewControllers = @[viewController,meController, foundController,readController,watchController];
+    //choiceController.controllerDelegate = navVC;
     
 //    ADNavigationController *nav0 = [[ADNavigationController alloc]initWithRootViewController:viewController];
 //    [nav0 setUpController:viewController title:@"新闻"];
@@ -84,6 +89,7 @@
 
     [self addChildViewController:navVC];
     [self.view addSubview:navVC.view];
+    
 }
 
 - (void)didReceiveMemoryWarning {

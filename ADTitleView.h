@@ -15,10 +15,19 @@
 @optional
 -(void)titleView:(ADTitleView *)titleView pushController:(UIViewController *)controller;
 
+//滚动方式
+-(void)titleView:(ADTitleView *)titleView scrollToIndex:(NSInteger)tagIndex;
+
 @end
 
 @interface ADTitleView : UIView
 
+
+@property(nonatomic,strong) UISegmentedControl *segment;
+
 @property(nonatomic,weak) id<ADTitleViewDelegate>delegate;
+
+-(void)segmentSelected:(NSInteger)tag;
+
 
 @end

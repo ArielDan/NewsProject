@@ -19,12 +19,15 @@
 #import "ADGoodsFrame.h"
 
 #import "ADChoiceCell.h"
+#import "ADNavigationBar.h"
+#import "ADNavigationController.h"
+#import "ADFindController.h"
 
 #define kURL @"http://v.higo.meilishuo.com/goods/goods_discover"
 
 static ADChoiceController *instance;
 
-@interface ADChoiceController()<ADTitleViewDelegate>
+@interface ADChoiceController()
 
 @property(nonatomic,assign) int networkCount;
 
@@ -33,6 +36,8 @@ static ADChoiceController *instance;
 @property(nonatomic,strong) NSMutableArray *arrFrame;
 
 @end
+
+ static NSString *indentifier = @"cell";
 
 @implementation ADChoiceController
 +(instancetype)getInstance{
@@ -45,29 +50,42 @@ static ADChoiceController *instance;
     
     return _arrFrame;
 }
+//-(ADTitleView *)titleView{
+//    if (!_titleView) {
+//        _titleView = [[ADTitleView alloc] init];
+//        _titleView.backgroundColor =[UIColor cyanColor];
+//        [self.navigationController.view addSubview:_titleView];
+//    }
+//    return _titleView;
+//}
+
+-(void)viewWillAppear:(BOOL)animated{
+    instance = self;
+   // [self setupTitleView];
+}
 
 -(void)viewDidLoad{
     
     [super viewDidLoad];
     
-    instance = self;
+    
     [self sendRequest];
-    [self setupTitleView];
+   // [self addTopView];
     
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     
+    [self.tableView registerClass:[ADChoiceCell class] forCellReuseIdentifier:indentifier];   
+    
+//    ADFindController *findVC = [[ADFindController alloc] init];
+//    
+//    __weak typeof(ADChoiceController) *weakSelf = self;
+//    self.showControllerBlock = ^(){
+//        [weakSelf presentViewController:findVC animated:YES completion:nil];
+//    };
 }
 
--(void)setupTitleView{
-    ADTitleView *titleView = [[ADTitleView alloc] init];
-    titleView.frame = CGRectMake(0, 0, self.view.width, self.navigationController.navigationBar.height);
-    self.navigationItem.titleView = titleView;
-    
-    titleView.delegate = self;
-    
-    self.titleView = titleView;
-}
+
 
 #pragma mark - 发送网络请求，获取数据
 
@@ -82,25 +100,15 @@ static ADChoiceController *instance;
     [manager GET:urlStr parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
         NSArray *list = responseObject[@"data"][@"goods_list"];
-//        for (ADGroupsModel *goodsModel in list) {
-//            NSLog(@"%@",goodsModel.goods_desc);
-//            
-//            ADGoodsFrame *frame = [[ADGoodsFrame alloc] init];
-//            //传递模型
-//            frame.goodsModel = goodsModel;           
-//            [arr addObject:frame];
-//        }
-//        
-//        [self.arrFrame addObjectsFromArray:arr];
-//        
-//        [self.tableView reloadData];
+
         [list enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             //商品展示数据
             ADGroupsModel *model = [[ADGroupsModel alloc] init];;
             [model setValue:obj[@"goods_name"] forKey:@"goods_name"];
             [model setValue:obj[@"goods_id"] forKey:@"goods_id"];
-            [model setValue:obj[@"goods_desc"] forKey:@"goods_desc"];
+            //[model setValue:obj[@"goods_desc"] forKey:@"goods_desc"];
             [model setValue:obj[@"goods_display_final_price"] forKey:@"goods_display_final_price"];
+            [model setValue:obj[@"group_info"] forKey:@"group_info"];
             [model setValue:obj[@"main_image"] forKey:@"goods_image"];
             //[model setValuesForKeysWithDictionary:obj];
             
@@ -120,11 +128,8 @@ static ADChoiceController *instance;
     
 }
 
-#pragma mark titleView代理方法
--(void)titleView:(ADTitleView *)titleView pushController:(UIViewController *)controller{
-//    [self.navigationController pushViewController:controller animated:YES];
-    [self presentViewController:controller animated:YES completion:nil];
-}
+
+
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
     return 1;
@@ -135,17 +140,20 @@ static ADChoiceController *instance;
 }
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    static NSString *indentifier = @"cell";
-    [self.tableView registerClass:[ADChoiceCell class] forCellReuseIdentifier:indentifier];
-    
     ADChoiceCell *cell = [self.tableView dequeueReusableCellWithIdentifier:indentifier forIndexPath:indexPath];
-    if (cell == nil) {
-        cell = [[ADChoiceCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
-    }
     
     cell.goodsFrame = self.arrFrame[indexPath.row];
+    //cell.groupModel = self.arrFrame[indexPath.row];
     return cell;
     
+}
+
+-(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 180.f;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    ADGoodsFrame *frame = self.arrFrame[indexPath.row];
+    return frame.cellH;
 }
 
 @end

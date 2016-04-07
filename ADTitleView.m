@@ -14,11 +14,17 @@
 
 @interface ADTitleView()
 
-@property(nonatomic,strong)ADChoiceController *choiceController;
-@property(nonatomic,strong)ADFindController *findController;
+@property(nonatomic,strong) UIView *mainView;
 
 @end
 @implementation ADTitleView
+
+-(UIView *)mainView{
+    if (!_mainView) {
+        _mainView = [[UIView alloc] init];
+    }
+    return _mainView;
+}
 
 -(instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
@@ -50,37 +56,24 @@
     //默认选中
     segment.selectedSegmentIndex = 0;
     
-    segment.frame = CGRectMake(self.width/2 - segment.width, 10, 100, 24);
+    segment.frame = CGRectMake(self.width/2 - segment.width/2, 20, 100, 24);
     segment.tintColor = [UIColor whiteColor];
     [segment addTarget:self action:@selector(segmentClick:) forControlEvents:UIControlEventValueChanged];
     [self addSubview:segment];
+    self.segment = segment;
     
 }
-
--(void)segmentClick:(UISegmentedControl *)seg{
-    switch (seg.selectedSegmentIndex) {
-        case 0:
-            self.choiceController = [ADChoiceController getInstance];
-            if ([self.delegate respondsToSelector:@selector(titleView:pushController:)]) {
-                [self.delegate titleView:self pushController:self.choiceController];
-                
-            }
-          
-            break;
-        case 1:
-            if ([self.delegate respondsToSelector:@selector(titleView:pushController:)]) {
-                self.findController = [[ADFindController alloc] init];
-                [self.delegate titleView:self pushController:self.findController];
-                
-            }
-           
-        default:
-            break;
+-(void)segmentClick:(UISegmentedControl *)segment{
+    self.segment.selectedSegmentIndex = segment.selectedSegmentIndex;
+    //self.segment.enabled = NO;
+    if ([self.delegate respondsToSelector:@selector(titleView:scrollToIndex:)]) {
+        [self.delegate titleView:self scrollToIndex:segment.selectedSegmentIndex];
     }
-    
-    seg.enabled = NO;
+}
 
-    
+
+-(void)segmentSelected:(NSInteger)tag{
+    self.segment.selectedSegmentIndex = tag;
 }
 
 //-(void)setupButton{

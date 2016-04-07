@@ -10,4 +10,6 @@
 
 @interface ADFindController : UIViewController
 
++(instancetype)getInstance;
+
 @end

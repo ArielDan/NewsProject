@@ -8,8 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol TwoControllerSegmentDelegate <NSObject>
+
+-(void)addControllerTitleView;
+
+@end
+
 @interface ADChoiceController : UITableViewController<UITableViewDataSource,UITableViewDelegate>
 
 +(instancetype)getInstance;
+
+@property (nonatomic,weak) id<TwoControllerSegmentDelegate> controllerDelegate;
+
+//@property(nonatomic,strong) void(^showControllerBlock)();
 
 @end

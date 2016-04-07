@@ -13,7 +13,7 @@
 @interface ADGroupsModel : NSObject
 
 @property (nonatomic,copy) NSString *goods_id;  //group_id  goods_name  goods_desc
-@property (nonatomic,copy) NSString *group_info;
+@property (nonatomic,copy) NSDictionary *group_info;
 @property (nonatomic,copy) NSString *goods_name;
 @property (nonatomic,copy) NSString *goods_desc;
 @property (nonatomic,copy) NSString *goods_display_final_price;  //产品的价格

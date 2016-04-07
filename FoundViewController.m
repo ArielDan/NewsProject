@@ -12,37 +12,106 @@
 
 #import "ADTitleView.h"
 
-#import "ADNavigationController.h"
+#import "ADFindController.h"
+#import "ADChoiceController.h"
 
 #import "UIView+Frame.h"
-@interface FoundViewController()
+@interface FoundViewController()<UIScrollViewDelegate,ADTitleViewDelegate>
 
-@property(nonatomic,strong) ADTitleView *titleView;
+@property(nonatomic,weak) ADTitleView *titleView;
 
+//子视图、控制器
+@property(nonatomic,strong) NSMutableArray *childViewsArray;
+
+@property(nonatomic,weak) UIScrollView *scrollerView;
 
 @end
 
 @implementation FoundViewController
 
+-(NSMutableArray *)childViewsArray{
+    if (!_childViewsArray) {
+        _childViewsArray = [[NSMutableArray alloc] init];
+    }
+    return _childViewsArray;
+}
+
 -(void)viewDidLoad{
     [super viewDidLoad];
     
+    [self setupScrollerView];
     
-
     [self setupTitleView];
-    
-    
-    
 }
 
 -(void)setupTitleView{
     ADTitleView *titleView = [[ADTitleView alloc] init];
-    titleView.frame = CGRectMake(0, 0, self.view.width, self.navigationController.navigationBar.height);
-    self.navigationItem.titleView = titleView;
     
+    titleView.frame = CGRectMake(0, 5, self.view.width, self.navigationController.navigationBar.height);
+    // self.navigationItem.titleView = titleView;
+    [self.navigationController.view addSubview:titleView];
     titleView.delegate = self;
     
     self.titleView = titleView;
+}
+
+#pragma mark- 添加滚动视图
+-(void)setupScrollerView{
+    
+    ADChoiceController *choiceVC = [[ADChoiceController alloc] init];
+    ADFindController *findVC = [[ADFindController alloc] init];
+    findVC.view.frame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height, kScreenW, kScreenH - self.navigationController.navigationBar.frame.size.height);
+    
+    [self addChildViewController:choiceVC];
+    [self addChildViewController:findVC];
+    
+    //子视图添加到数组中
+    [self.childViewsArray addObject:choiceVC.view];
+    [self.childViewsArray addObject:findVC.view];
+    
+    UIScrollView *scrollerView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+    scrollerView.delegate = self;
+    [self.view addSubview:scrollerView];
+    
+    //创建、添加滚动视图
+    for (int i=0; i<self.childViewsArray.count; i++) {
+        CGFloat childViewX = kScreenW *i;
+        UIView *childView = self.childViewsArray[i];
+        childView.frame = CGRectMake(childViewX, 0, kScreenW, self.view.height);
+        [scrollerView addSubview:childView];
+    }
+    
+    //滚动属性
+    scrollerView.showsHorizontalScrollIndicator = NO; //是否显示滑动条
+    scrollerView.showsVerticalScrollIndicator = NO;
+    scrollerView.pagingEnabled = YES;   //是否整页翻动
+    scrollerView.contentSize = CGSizeMake(kScreenW*2, self.view.height-64);//-64保证点击滑动到第二个视图时，视图不会上移
+    scrollerView.bounces = NO;
+    self.scrollerView = scrollerView;
+    
+}
+
+#pragma mark- scrollerView delegate
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    //NSLog(@"contentoffSize:%f && n=%f",scrollView.contentOffset.x,scrollView.contentOffset.x/kScreenW);
+    if (scrollView.contentOffset.x/kScreenW == 0) {
+        
+        
+        [self.titleView segmentSelected:0];
+    }else{
+        [self.titleView segmentSelected:1];
+    }
+}
+
+
+
+#pragma mark- titleView代理方法
+-(void)titleView:(ADTitleView *)titleView scrollToIndex:(NSInteger)tagIndex{
+   
+    
+    [self.scrollerView scrollRectToVisible:CGRectMake(kScreenW * tagIndex, 0, self.view.width, self.view.height) animated:YES];
+   // [self.scrollerView setContentOffset:CGPointMake(kScreenW*tagIndex, 0) animated:YES];
+
 }
 
 //#pragma mark titleView代理方法
