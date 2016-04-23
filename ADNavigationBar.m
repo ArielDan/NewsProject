@@ -45,12 +45,15 @@ static ADNavigationBar *instance;
 
 -(void)buildView{
     UIButton *leftBtn = [[UIButton alloc] init];
-    leftBtn.frame = CGRectMake(0, 15, 50, 50);
+    leftBtn.frame = CGRectMake(0, 20, 50, 50);
     //[self.rightBtn setTitle:@"+" forState:UIControlStateNormal];
     [leftBtn setImage:[UIImage imageNamed:@"top_navigation_menuicon"] forState:UIControlStateNormal];
     [leftBtn addTarget:self action:@selector(leftBtnClicks) forControlEvents:UIControlEventTouchUpInside];
-//    UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
+    //UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
+
+    
 //    [leftBtn setImageEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 10)];
+    
     [self addSubview:leftBtn];
     
 //    ADChoiceController *vc = [ADChoiceController getInstance];

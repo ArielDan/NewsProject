@@ -14,6 +14,7 @@
 
 #import "ADFindController.h"
 #import "ADChoiceController.h"
+#import "ADNavigationController.h"
 
 #import "UIView+Frame.h"
 @interface FoundViewController()<UIScrollViewDelegate,ADTitleViewDelegate>
@@ -44,12 +45,24 @@
     [self setupTitleView];
 }
 
+-(void)viewWillDisappear:(BOOL)animated{
+
+    self.titleView.hidden = YES;
+    
+}
+-(void)viewWillAppear:(BOOL)animated{
+    self.titleView.hidden = NO;
+}
+
 -(void)setupTitleView{
     ADTitleView *titleView = [[ADTitleView alloc] init];
     
-    titleView.frame = CGRectMake(0, 5, self.view.width, self.navigationController.navigationBar.height);
+    titleView.frame = CGRectMake(0, 0, self.view.width, self.navigationController.navigationBar.height);
     // self.navigationItem.titleView = titleView;
-    [self.navigationController.view addSubview:titleView];
+    ADNavigationController *navVC = [ADNavigationController getInstance];
+   // [navVC.navBar addSubview:titleView];
+    [navVC.navigationBar addSubview:titleView];
+   // [self.navigationController.view addSubview:titleView];
     titleView.delegate = self;
     
     self.titleView = titleView;

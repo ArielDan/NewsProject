@@ -12,4 +12,6 @@
 
 +(id)getDataWithRequest:(NSString *)requestStr;
 
++(id)getDataByAFNFromInternet;
+
 @end

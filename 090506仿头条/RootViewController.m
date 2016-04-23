@@ -54,17 +54,32 @@
     
     ViewController *viewController = [[ViewController alloc] init];
     MeViewController *meController = [[MeViewController alloc] init];
-    ADChoiceController *choiceController = [[ADChoiceController alloc] init];
+    //ADChoiceController *choiceController = [[ADChoiceController alloc] init];
     
     FoundViewController *foundController = [[FoundViewController alloc] init];
     ReadViewController *readController = [[ReadViewController alloc] init];
     WatchViewController *watchController = [[WatchViewController alloc] init];
     
-    ADNavigationController *navVC = [[ADNavigationController alloc] initWithRootViewController:tabBarController];
- //   navVC.viewControllers = @[viewController,readController,choiceController,foundController,watchController,meController];
-    //navVC.titleView.delegate = foundController;
-    tabBarController.viewControllers = @[viewController,meController, foundController,readController,watchController];
-    //choiceController.controllerDelegate = navVC;
+    //ADNavigationController *navVC = [[ADNavigationController alloc] initWithRootViewController:tabBarController];
+//    ADNavigationController *navVC = [[ADNavigationController alloc] init];
+//   
+//    navVC.viewControllers = @[viewController,readController,foundController,watchController,meController];
+    NSArray *viewControllers = @[viewController,readController,foundController,watchController,meController];
+    
+    NSMutableArray *viewVC = [[NSMutableArray alloc] init];
+    NSArray *titleArr = @[@"新闻",@"阅读",@"发现",@"视听",@"我"];
+    int i = 0 ;
+    for (UIViewController *VC in viewControllers) {
+        ADNavigationController *navView = [[ADNavigationController alloc] initWithRootViewController:VC];
+        [navView setUpController:VC title:titleArr[i]];
+        i++;
+    
+        [viewVC addObject:navView];
+    }
+    tabBarController.viewControllers = viewVC;
+
+    //self.leftDelegate = navVC;
+    //tabBarController.viewControllers = @[viewController,readController,foundController,watchController,meController];
     
 //    ADNavigationController *nav0 = [[ADNavigationController alloc]initWithRootViewController:viewController];
 //    [nav0 setUpController:viewController title:@"新闻"];
@@ -84,11 +99,11 @@
 //    tabBarController.viewControllers = @[nav0,nav1,nav2,nav3,nav4];
     
     
-//    [self addChildViewController:tabBarController];
-//    [self.view addSubview:tabBarController.view];
+    [self addChildViewController:tabBarController];
+    [self.view addSubview:tabBarController.view];
 
-    [self addChildViewController:navVC];
-    [self.view addSubview:navVC.view];
+//    [self addChildViewController:navVC];
+//    [self.view addSubview:navVC.view];
     
 }
 

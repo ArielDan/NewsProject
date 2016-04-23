@@ -8,6 +8,7 @@
 
 #import "GetDataInterfaceJSON.h"
 #import "AFNetworking.h"
+#import "MBProgressHUD.h"
 
 @implementation GetDataInterfaceJSON
 
@@ -57,5 +58,7 @@
     NSString *responseStr = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
     return responseStr;
 }
+
+
 
 @end

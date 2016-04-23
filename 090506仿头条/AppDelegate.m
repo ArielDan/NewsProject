@@ -18,8 +18,11 @@
 #import "WatchViewController.h"
 
 #import "UIViewController+AD.h"
+#import <MediaPlayer/MediaPlayer.h>
 
-@interface AppDelegate ()
+@interface AppDelegate (){
+    BOOL _isFullScrenn;
+}
 
 @end
 
@@ -28,21 +31,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    //ViewController *view = [[ViewController alloc] init];
     
-//    RootViewController *view = [[RootViewController alloc] init];
-//    
-//    self.window.backgroundColor = [UIColor whiteColor];
-//    
-//    UINavigationController *nav = [[UINavigationController alloc] init];
-//    
-//    [nav.navigationBar setBarTintColor:[UIColor redColor]];
-//    
-//    self.window.rootViewController = nav;
-//    
-//    //添加子视图到控制器
-//    
-//    [nav pushViewController:view animated:YES];
+    //注册进入全屏和退出全屏
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterFullScreen) name:MPMoviePlayerWillEnterFullscreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willExitFullScreen) name:MPMoviePlayerWillExitFullscreenNotification object:nil];
+    
 //    
     UIApplication *app = [UIApplication sharedApplication];
     
@@ -67,6 +60,22 @@
     return YES;
 }
 
+-(void)willEnterFullScreen{
+    _isFullScrenn = YES;
+}
+-(void)willExitFullScreen{
+    _isFullScrenn = NO;
+}
+
+- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+    if (_isFullScrenn) {
+    return UIInterfaceOrientationMaskPortrait |    UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight;
+} else {
+    return UIInterfaceOrientationMaskPortrait;
+}
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -88,5 +97,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+
 
 @end

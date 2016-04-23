@@ -11,7 +11,7 @@
 #import "ADNavigationBar.h"
 #import "FoundViewController.h"
 #import "ADTitleView.h"
-
+#import "RootViewController.h"
 #import "ADFindController.h"
 
 static ADNavigationController *instance;
@@ -39,21 +39,38 @@ static ADNavigationController *instance;
     bar.shadowImage=[[UIImage alloc]init];  //隐藏掉导航栏底部的那条线
     
 }
+
+-(void)buildLeftBtn:(UIViewController *)controller{
+    UIButton *leftBtn = [[UIButton alloc] init];
+    leftBtn.frame = CGRectMake(0, 0, 50, 50);
+    
+    [leftBtn setImage:[UIImage imageNamed:@"top_navigation_menuicon"] forState:UIControlStateNormal];
+    [leftBtn addTarget:self action:@selector(leftBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    //[self.view addSubview:leftBtn];
+    UIBarButtonItem *left = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
+    
+    controller.navigationItem.leftBarButtonItem = left;
+    
+}
 -(void)viewDidLoad{
     instance = self;
-    ADNavigationBar *navBar = [[ADNavigationBar alloc] initWithFrame:self.navigationBar.frame];
-    navBar.transDelegate = self;
-    [self.view addSubview:navBar];
+//    ADNavigationBar *navBar = [[ADNavigationBar alloc] initWithFrame:self.navigationBar.frame];
+//    navBar.transDelegate = self;
+//    [self.view addSubview:navBar];
+//    self.navBar = navBar;
     
+    
+    
+   
     //定义block
-//    __weak typeof(ADNavigationController) *weakSelf = self;
+   // __weak typeof(ADNavigationController) *weakSelf = self;
 //    self.hideTitleViewBlock = ^(){
 //        weakSelf.titleView.hidden = YES;
 //    };
 //    self.showTitleViewBlock = ^(){
 //        weakSelf.titleView.hidden = NO;
 //    };
-//
 //    ADTitleView *titleView = [[ADTitleView alloc] init];
 //    titleView.frame = CGRectMake(0, 0, self.view.frame.size.width, 64);
 //    //self.navigationItem.titleView = titleView;
@@ -64,7 +81,9 @@ static ADNavigationController *instance;
 //    [self.view addSubview:titleView];
 //    titleView.hidden = YES;
 //    self.titleView = titleView;
-
+//    self.hiddenBarBlock = ^(){
+//        weakSelf.navBar.hidden = YES;
+//    };
     
 }
 
@@ -110,7 +129,9 @@ static ADNavigationController *instance;
         CGAffineTransform translateForm = CGAffineTransformTranslate(scaleForm, translateX, 0);
         
         //self.navigationController.view.transform = translateForm;
-        self.view.transform = translateForm;
+        self.tabBarController.view.transform = translateForm;
+        //self.view.transform = translateForm;
+        
         //创建一个按钮覆盖首页
         UIButton *cover = [[UIButton alloc] initWithFrame:self.view.bounds];
         cover.tag = kButtonTag;
@@ -149,7 +170,9 @@ static ADNavigationController *instance;
         CGAffineTransform anim = CGAffineTransformTranslate(scaleform, -80, 0);
         self.leftMenu.transform = anim;
         
-        self.view.transform = CGAffineTransformIdentity;
+        //self.view.transform = CGAffineTransformIdentity;
+        self.tabBarController.view.transform = CGAffineTransformIdentity;
+        
     } completion:^(BOOL finished) {
         [cover removeFromSuperview];
     }];

@@ -13,6 +13,7 @@
 
 #import "ViewController.h"
 #import "ADNavigationController.h"
+#import "WatchViewController.h"
 #import "ADLeftMenu.h"
 
 
@@ -29,7 +30,6 @@
     //[self addBackgroundImage];
     
     //_navController = [[ADNavigationController alloc] init];
-    
     
     
     ADTabBar *tabBar = [[ADTabBar alloc] init];
@@ -67,5 +67,7 @@
 //        nav.showTitleViewBlock();
 //    }
 }
+
+
 
 @end

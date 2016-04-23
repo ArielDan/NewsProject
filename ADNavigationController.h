@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @class ADTitleView;
+@class ADNavigationBar;
 
 @interface ADNavigationController : UINavigationController
 
@@ -17,10 +18,13 @@
 
 @property (nonatomic,strong) ADTitleView *titleView;
 
+@property (nonatomic,strong) ADNavigationBar *navBar;
+
 
 //调用，隐藏titleView;
-@property (nonatomic,strong) void(^hideTitleViewBlock)();
-
-@property (nonatomic,strong) void(^showTitleViewBlock)();
+//@property (nonatomic,strong) void(^hideTitleViewBlock)();
+//
+//@property (nonatomic,strong) void(^showTitleViewBlock)();
+@property (nonatomic,strong) void(^hiddenBarBlock)();
 
 @end

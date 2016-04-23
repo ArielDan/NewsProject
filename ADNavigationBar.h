@@ -18,6 +18,8 @@
 
 +(instancetype)getInstance;
 
+
+
 @property(nonatomic,weak) id<ViewTransformDelegate> transDelegate;
 
 @property(nonatomic,strong) void(^titleViewShowBlock)();
