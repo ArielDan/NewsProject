@@ -11,7 +11,8 @@
 
 @interface MediaPlayerViewController ()
 
-@property (nonatomic,strong) MPMoviePlayerController *movieController;//播放控制器
+//@property (nonatomic,strong) MPMoviePlayerController *movieController;//播放控制器
+@property (nonatomic,strong) MPMoviePlayerViewController *movieController;
 
 @end
 
@@ -22,22 +23,25 @@
     // Do any additional setup after loading the view.
     
     [super viewDidLoad];
+    [self addNotification];
     
     //播放
-    [self.movieController play];
-    [self addNotification];
-    [self.view setBackgroundColor:[UIColor whiteColor]];
+    [self.movieController.moviePlayer play];
+    
+    
 }
 
 
--(MPMoviePlayerController *)movieController{
+-(MPMoviePlayerViewController *)movieController{
     if (!_movieController) {
         NSURL *url = [self getNetworkURL];
-        _movieController = [[MPMoviePlayerController alloc] initWithContentURL:url];
+        _movieController = [[MPMoviePlayerViewController alloc] initWithContentURL:url];
         _movieController.view.frame = self.view.bounds;
-        _movieController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth |UIViewAutoresizingFlexibleHeight;
-        _movieController.controlStyle = MPMovieControlStyleDefault;
-        [self.view addSubview:_movieController.view];
+        _movieController.moviePlayer.scalingMode = MPMovieScalingModeAspectFit;
+        _movieController.moviePlayer.fullscreen = YES;
+       // _movieController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth |UIViewAutoresizingFlexibleHeight;
+        _movieController.moviePlayer.controlStyle = MPMovieControlStyleDefault;
+       // [self.view addSubview:_movieController.view];
         
     }
     return _movieController;
@@ -54,36 +58,49 @@
 -(void)addNotification{
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter addObserver:self selector:@selector(mediaPlayerStatusChange:) name:MPMoviePlayerPlaybackStateDidChangeNotification object:self.movieController];
+    [notificationCenter addObserver:self selector:@selector(mediaFinishPlay:) name:MPMoviePlayerPlaybackDidFinishNotification object:self.movieController];
     
 }
 //状态改变
 -(void)mediaPlayerStatusChange:(NSNotification *)notification{
-    switch (self.movieController.playbackState) {
+    switch (self.movieController.moviePlayer.playbackState) {
         case MPMoviePlaybackStatePlaying:
             NSLog(@"播放中。。。");
             
             break;
         case MPMoviePlaybackStatePaused:
             NSLog(@"暂停");
+            
             break;
         case MPMoviePlaybackStateStopped:
             NSLog(@"停止");
+            
             break;
         default:
             break;
     }
 }
 
+-(void)mediaFinishPlay:(NSNotification *)notification{
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    //[self.movieController.view removeFromSuperview];
+    
+}
+
+
+
 #pragma mark- 添加触摸手势事件
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    if (self.navigationController.navigationBar.hidden){
-        self.navigationController.navigationBar.hidden = NO;
-        self.tabBarController.tabBar.hidden = NO;
-    }else{
-        self.navigationController.navigationBar.hidden = YES;
-        self.tabBarController.tabBar.hidden = YES;
-    }
-    
+//    if (self.navigationController.navigationBar.hidden){
+//        self.navigationController.navigationBar.hidden = NO;
+//        self.tabBarController.tabBar.hidden = NO;
+//    }else{
+//        self.navigationController.navigationBar.hidden = YES;
+//        self.tabBarController.tabBar.hidden = YES;
+//    }
+
 }
 
 - (void)didReceiveMemoryWarning {

@@ -33,8 +33,8 @@
     // Override point for customization after application launch.
     
     //注册进入全屏和退出全屏
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterFullScreen) name:MPMoviePlayerWillEnterFullscreenNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willExitFullScreen) name:MPMoviePlayerWillExitFullscreenNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterFullScreen) name:MPMoviePlayerWillEnterFullscreenNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willExitFullScreen) name:MPMoviePlayerWillExitFullscreenNotification object:nil];
     
 //    
     UIApplication *app = [UIApplication sharedApplication];
@@ -60,21 +60,21 @@
     return YES;
 }
 
--(void)willEnterFullScreen{
-    _isFullScrenn = YES;
-}
--(void)willExitFullScreen{
-    _isFullScrenn = NO;
-}
+//-(void)willEnterFullScreen{
+//    _isFullScrenn = YES;
+//}
+//-(void)willExitFullScreen{
+//    _isFullScrenn = NO;
+//}
 
-- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
-{
-    if (_isFullScrenn) {
-    return UIInterfaceOrientationMaskPortrait |    UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight;
-} else {
-    return UIInterfaceOrientationMaskPortrait;
-}
-}
+//- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+//{
+//    if (_isFullScrenn) {
+//    return UIInterfaceOrientationMaskPortrait |    UIInterfaceOrientationMaskLandscapeLeft | UIInterfaceOrientationMaskLandscapeRight;
+//} else {
+//    return UIInterfaceOrientationMaskPortrait;
+//}
+//}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

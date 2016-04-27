@@ -110,6 +110,7 @@
 		E7F3639E1BF60DF1003C710F /* ADDataCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E7F3639D1BF60DF1003C710F /* ADDataCache.m */; };
 		E7F363A11BF611B3003C710F /* ADHttpTool.m in Sources */ = {isa = PBXBuildFile; fileRef = E7F363A01BF611B3003C710F /* ADHttpTool.m */; };
 		E7F4A9961CCB0D25008058EE /* MediaPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7F4A9951CCB0D25008058EE /* MediaPlayerViewController.m */; };
+		E7F4A9991CCF82FD008058EE /* VidioPlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7F4A9981CCF82FD008058EE /* VidioPlayViewController.m */; };
 		E7F8FF491CC9DA5100C7863E /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F8FF481CC9DA5100C7863E /* MediaPlayer.framework */; };
 /* End PBXBuildFile section */
 
@@ -311,6 +312,8 @@
 		E7F363A01BF611B3003C710F /* ADHttpTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADHttpTool.m; sourceTree = "<group>"; };
 		E7F4A9941CCB0D25008058EE /* MediaPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaPlayerViewController.h; sourceTree = "<group>"; };
 		E7F4A9951CCB0D25008058EE /* MediaPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaPlayerViewController.m; sourceTree = "<group>"; };
+		E7F4A9971CCF82FD008058EE /* VidioPlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VidioPlayViewController.h; sourceTree = "<group>"; };
+		E7F4A9981CCF82FD008058EE /* VidioPlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VidioPlayViewController.m; sourceTree = "<group>"; };
 		E7F8FF481CC9DA5100C7863E /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -823,6 +826,8 @@
 			children = (
 				E7F4A9941CCB0D25008058EE /* MediaPlayerViewController.h */,
 				E7F4A9951CCB0D25008058EE /* MediaPlayerViewController.m */,
+				E7F4A9971CCF82FD008058EE /* VidioPlayViewController.h */,
+				E7F4A9981CCF82FD008058EE /* VidioPlayViewController.m */,
 			);
 			path = controller;
 			sourceTree = "<group>";
@@ -953,6 +958,7 @@
 				E7D9130A1BC7AD82006BE125 /* AFHTTPRequestOperation.m in Sources */,
 				E78199F01BCF7C8A00D3ECA2 /* MJRefreshStateHeader.m in Sources */,
 				E73C618D1CB6541C007BC2B8 /* ADImageModel.m in Sources */,
+				E7F4A9991CCF82FD008058EE /* VidioPlayViewController.m in Sources */,
 				E7341BB81BA5235B00B8BA0A /* UIView+Frame.m in Sources */,
 				E7DE27831B9AD94A009EC62A /* ViewController.m in Sources */,
 				E73C61741CB64494007BC2B8 /* ADGroupsModel.m in Sources */,
