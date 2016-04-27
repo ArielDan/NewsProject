@@ -52,17 +52,16 @@
 }
 -(void)viewWillAppear:(BOOL)animated{
     self.titleView.hidden = NO;
+    
 }
 
 -(void)setupTitleView{
     ADTitleView *titleView = [[ADTitleView alloc] init];
     
     titleView.frame = CGRectMake(0, 0, self.view.width, self.navigationController.navigationBar.height);
-    // self.navigationItem.titleView = titleView;
-    ADNavigationController *navVC = [ADNavigationController getInstance];
-   // [navVC.navBar addSubview:titleView];
-    [navVC.navigationBar addSubview:titleView];
-   // [self.navigationController.view addSubview:titleView];
+    
+    self.navigationItem.titleView = titleView;
+
     titleView.delegate = self;
     
     self.titleView = titleView;
@@ -73,7 +72,7 @@
     
     ADChoiceController *choiceVC = [[ADChoiceController alloc] init];
     ADFindController *findVC = [[ADFindController alloc] init];
-    findVC.view.frame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height, kScreenW, kScreenH - self.navigationController.navigationBar.frame.size.height);
+//    findVC.view.frame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height, kScreenW, kScreenH - self.navigationController.navigationBar.frame.size.height);
     
     [self addChildViewController:choiceVC];
     [self addChildViewController:findVC];
@@ -82,10 +81,12 @@
     [self.childViewsArray addObject:choiceVC.view];
     [self.childViewsArray addObject:findVC.view];
     
+    //UIScrollView *scrollerView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.navigationController.navigationBar.frame), kScreenW, kScreenH)];
     UIScrollView *scrollerView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+    
     scrollerView.delegate = self;
     [self.view addSubview:scrollerView];
-    
+    //[self.navigationController.view addSubview:scrollerView];
     //创建、添加滚动视图
     for (int i=0; i<self.childViewsArray.count; i++) {
         CGFloat childViewX = kScreenW *i;
@@ -98,7 +99,11 @@
     scrollerView.showsHorizontalScrollIndicator = NO; //是否显示滑动条
     scrollerView.showsVerticalScrollIndicator = NO;
     scrollerView.pagingEnabled = YES;   //是否整页翻动
-    scrollerView.contentSize = CGSizeMake(kScreenW*2, self.view.height-64);//-64保证点击滑动到第二个视图时，视图不会上移
+    
+    
+    //content内容的宽和高
+    scrollerView.contentSize = CGSizeMake(kScreenW*2, 0);
+    
     scrollerView.bounces = NO;
     self.scrollerView = scrollerView;
     
