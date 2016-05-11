@@ -49,6 +49,7 @@
     
     if (self) {
         [self initSubviews];
+        self.dk_backgroundColorPicker = DKColorPickerWithKey(BG);
     }
     
     return  self;

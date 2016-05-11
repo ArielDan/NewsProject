@@ -16,7 +16,6 @@
 
 //@property(nonatomic,strong)NSString *getNews;
 
-+(instancetype)getInstance;
 
 @end
 

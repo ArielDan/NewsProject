@@ -17,4 +17,6 @@
 #import "MBProgressHUD.h"
 
 
+#import <DKNightVersion/DKNightVersion.h>
+
 #endif /* PrefixHeader_pch */

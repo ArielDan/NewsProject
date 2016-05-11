@@ -18,6 +18,7 @@
 
 @property (nonatomic,copy) NSString *goods_id;  //group_id  goods_name  goods_desc
 @property (nonatomic,copy) NSDictionary *group_info; //城市信息
+@property (nonatomic,copy) NSString *shop_id;
 @property (nonatomic,copy) NSString *goods_name;
 @property (nonatomic,copy) NSString *goods_repertory;//库存
 @property (nonatomic,copy) NSString *goods_status;
@@ -31,8 +32,12 @@
 @property (nonatomic,copy) NSString *goods_display_final_price;  //产品的价格
 @property (nonatomic,copy) NSString *goods_display_color_name;  //产品的颜色
 @property (nonatomic,copy) NSArray *label;
+@property (nonatomic,copy) NSString *superGreatFlag;
+@property (nonatomic,copy) NSString *goodsTags;
+@property (nonatomic,assign) NSInteger salesVolume;
 @property (nonatomic,copy) NSString *pro;
 @property (nonatomic,copy) NSString *hearts_number;
+@property (nonatomic,assign) BOOL isWish;
 
 //图片模型
 @property (nonatomic,strong) ADImageModel *main_image;

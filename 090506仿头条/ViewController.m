@@ -34,6 +34,7 @@
 
 
 static ViewController *instance;
+static NSString *indentifier = @"cell";
 
 
 @interface ViewController ()<ADTabBarDelegate,ADHeaderViewDelegate>{
@@ -78,9 +79,6 @@ static ViewController *instance;
 
 @implementation ViewController
 
-+(instancetype)getInstance{
-    return instance;
-}
 #pragma mark - 懒加载
 -(NSArray *)newsLists{
     if (_newsLists == nil) {
@@ -119,6 +117,7 @@ static ViewController *instance;
     
     //[self tableRefresh];
     [self setupRefresh];
+    [_tableView registerClass:[ADNewsTableViewCell class]  forCellReuseIdentifier:indentifier];
     
 }
 
@@ -392,7 +391,6 @@ static ViewController *instance;
     NSError *error;
     //NSString *url = @"http://c.m.163.com/nc/article/headline/T1348647853363/0-15.html";
     NSString *str = [[NSString alloc] initWithString:[GetDataInterfaceJSON getDataWithRequest:url]];
-    //NSLog(@"%@",str);
     
     //对象序列化为字典
     
@@ -400,7 +398,6 @@ static ViewController *instance;
     
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
     NSArray *list = [dic objectForKey:@"T1348647853363"];
-    //NSLog(@"%@",list);
     
     //数组遍历
     [list enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -513,9 +510,7 @@ static ViewController *instance;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *indentifier = @"cell";
     
-    [_tableView registerClass:[ADNewsTableViewCell class]  forCellReuseIdentifier:indentifier];
     
     ADNewsTableViewCell *cell = [_tableView dequeueReusableCellWithIdentifier:indentifier forIndexPath:indexPath];
     if (cell == nil){
@@ -523,9 +518,7 @@ static ViewController *instance;
         
     }
     cell.news = _newsDetail[indexPath.row];
-   // NSLog(@"%@",_newsDetail);
-    
-    //NSLog(@"%@",[_newsDetail objectAtIndex:1]);
+
     return  cell;
 
 }

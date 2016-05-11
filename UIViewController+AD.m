@@ -24,10 +24,12 @@
 //@dynamic leftMenu;
 
 -(ADLeftMenu *)leftMenu{
-    return objc_getAssociatedObject(self, _cmd);
+    return objc_getAssociatedObject(self, _cmd);    //获取关联对象
+                                                    //_cmd在Objective-C的方法中表示当前方法的selector
 }
 -(void)setLeftMenu:(ADLeftMenu *)leftMenu{
-    objc_setAssociatedObject(self, @selector(leftMenu), leftMenu, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(leftMenu), leftMenu, OBJC_ASSOCIATION_RETAIN_NONATOMIC);   //关联两对象，可以不用修改类的定义而为其对象增加存储空间,传入 nil 则可以移除已有的关联对象
+
 }
 
 -(ADNavigationController *)navController{
@@ -87,7 +89,6 @@
         //[self.navController.view addSubview:cover];
         [self.navController.view addSubview:cover];
     }];
-    NSLog(@"leftClick");
 }
 
 #pragma mark - 左侧边栏点击的代理方法
