@@ -36,8 +36,8 @@
     UILabel *_lblSubtitle;
     
     UILabel *_digest;
-    UIImageView *_imageOther1;
-    UIImageView *_imageOther2;
+//    UIImageView *_imageOther1;
+//    UIImageView *_imageOther2;
 }
 
 @end
@@ -86,11 +86,11 @@
     //_digest.lineBreakMode = NSLineBreakByCharWrapping;
     _digest.numberOfLines = 0;
     
-    _imageOther1 = [[UIImageView alloc] init];
-    [self.contentView addSubview:_imageOther1];
-    
-    _imageOther2 = [[UIImageView alloc] init];
-    [self.contentView addSubview:_imageOther2];
+//    _imageOther1 = [[UIImageView alloc] init];
+//    [self.contentView addSubview:_imageOther1];
+//    
+//    _imageOther2 = [[UIImageView alloc] init];
+//    [self.contentView addSubview:_imageOther2];
     
 //    _reply = [[UIButton alloc] init];
 //    [self.contentView addSubview:_reply];
@@ -98,6 +98,12 @@
 //    [_reply setBackgroundImage:[UIImage imageNamed:@"night_contentcell_comment_border"] forState:UIControlStateNormal];
 //    _reply.userInteractionEnabled = NO;
 //    [_reply.titleLabel addSubview:_lblReply];
+    _photo.frame = CGRectMake(kCellBorder, kCellBorder, kPhotoWidth, kPhotoHeight);
+    
+    
+    _lblReply.textColor = [UIColor lightGrayColor];
+    
+    _lblReply.font = [UIFont systemFontOfSize:10];
 
 }
 
@@ -105,66 +111,49 @@
 -(void)setNews:(ADNews *)news{
     
     _news = news;
-    if (news.imgextra.count) {
-        [self imgextra];
-    }else{
-        [self normalShow];
-    }
+//    if (news.imgextra.count) {
+//        [self imgextra];
+//    }else{
+    
+//    }
 
     NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:news.imgsrc]];
     _photo.image = [UIImage imageWithData:imgData];
-   
-    _imageOther1.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[news.imgextra[0] valueForKey:@"imgsrc"]]]];
-
-    _imageOther2.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[news.imgextra[1] valueForKey:@"imgsrc"]]]];
     
     _lblTitle.text = self.news.title;
-    
-    CGFloat replyX = self.frame.size.width - 50;
-    CGFloat replyY = self.frame.size.height - 20;
-    CGFloat replyW = kReplyWidth;
-    CGFloat replyH = kReplyHeight;
-    _reply.frame = CGRectMake(replyX-10, replyY, replyW, replyH);
-    
-    _lblReply.frame = CGRectMake(replyX, replyY, replyW, replyH);
-    _lblReply.textColor = [UIColor lightGrayColor];
     _lblReply.text = [NSString stringWithFormat:@"%@跟帖",news.replyCount];
-    _lblReply.font = [UIFont systemFontOfSize:10];
     
-    
-   
+   [self normalShow];
 }
 //多张图片
--(void)imgextra{
-    CGFloat titleX = kMarginLeft;
-    CGFloat titleY = kMarginTop;
-    CGFloat titleW = self.frame.size.width - kCellBorder;
-    CGSize titleS = [self.news.title boundingRectWithSize:CGSizeMake(titleW, MAXFLOAT) options:NSStringDrawingTruncatesLastVisibleLine attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil].size;
-    _lblTitle.frame = CGRectMake(titleX, titleY, titleW, titleS.height);
-    _lblTitle.font = [UIFont systemFontOfSize:15];
-    
-    CGFloat imgY=CGRectGetMaxY(_lblTitle.frame)+kMarginTop;
-    CGFloat imgX=kMarginLeft;
-    CGFloat imgW=(kScreenW-kMarginLeft*2-kImgMargin*2)/3;  //多张图片显示的时候的宽度
-    CGFloat imgH=70;
-    
-    _photo.frame = CGRectMake(imgX, imgY, imgW, imgH);
-    //第二三张图片
-    
-    CGFloat img2X = CGRectGetMaxX(_photo.frame) + kImgMargin;
-    _imageOther1.frame = CGRectMake(img2X, imgY, imgW, imgH);
-    
-    CGFloat img3X = CGRectGetMaxX(_imageOther1.frame) + kImgMargin;
-    _imageOther2.frame = CGRectMake(img3X, imgY, imgW, imgH);
-    
-    //单元格高度
-    _height = CGRectGetMaxY(_imageOther1.frame)+2.5*kCellBorder;
-}
+//-(void)imgextra{
+//    CGFloat titleX = kMarginLeft;
+//    CGFloat titleY = kMarginTop;
+//    CGFloat titleW = self.frame.size.width - kCellBorder;
+//    CGSize titleS = [self.news.title boundingRectWithSize:CGSizeMake(titleW, MAXFLOAT) options:NSStringDrawingTruncatesLastVisibleLine attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:12]} context:nil].size;
+//    _lblTitle.frame = CGRectMake(titleX, titleY, titleW, titleS.height);
+//    _lblTitle.font = [UIFont systemFontOfSize:15];
+//    
+//    CGFloat imgY=CGRectGetMaxY(_lblTitle.frame)+kMarginTop;
+//    CGFloat imgX=kMarginLeft;
+//    CGFloat imgW=(kScreenW-kMarginLeft*2-kImgMargin*2)/3;  //多张图片显示的时候的宽度
+//    CGFloat imgH=70;
+//    
+//    _photo.frame = CGRectMake(imgX, imgY, imgW, imgH);
+//    //第二三张图片
+//    
+//    CGFloat img2X = CGRectGetMaxX(_photo.frame) + kImgMargin;
+//    _imageOther1.frame = CGRectMake(img2X, imgY, imgW, imgH);
+//    
+//    CGFloat img3X = CGRectGetMaxX(_imageOther1.frame) + kImgMargin;
+//    _imageOther2.frame = CGRectMake(img3X, imgY, imgW, imgH);
+//    
+//    //单元格高度
+//    _height = CGRectGetMaxY(_imageOther1.frame)+2.5*kCellBorder;
+//}
 
 //正常情况下的显示
 -(void)normalShow{
-    
-    _photo.frame = CGRectMake(kCellBorder, kCellBorder, kPhotoWidth, kPhotoHeight);
     
     CGFloat titleX = CGRectGetMaxX(_photo.frame) +kCellBorder;
     CGFloat titleY = kCellBorder;
@@ -202,6 +191,17 @@
     _digest.font = [UIFont systemFontOfSize:13];
     
     _digest.text = self.news.digest;
+    
+     CGSize replySize = [_lblReply.text boundingRectWithSize:CGSizeMake(self.contentView.frame.size.width, MAXFLOAT) options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:13]} context:nil].size;
+    
+    CGFloat replyX = self.contentView.frame.size.width - (replySize.width + 5);
+    CGFloat replyY = self.contentView.frame.size.height - 20;
+    
+    CGFloat replyW = replySize.width;
+    CGFloat replyH = kReplyHeight;
+    //_reply.frame = CGRectMake(replyX-10, replyY, replyW, replyH);
+    //NSLog(@"%@",NSStringFromCGRect(CGRectMake(replyX, replyY, replyW, replyH)));
+    _lblReply.frame = CGRectMake(replyX, replyY, replyW, replyH);
     
     //单元格高度
      _height = CGRectGetMaxY(_photo.frame)+ 2 * kCellBorder;

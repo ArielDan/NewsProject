@@ -114,6 +114,8 @@
 		E7F363A11BF611B3003C710F /* ADHttpTool.m in Sources */ = {isa = PBXBuildFile; fileRef = E7F363A01BF611B3003C710F /* ADHttpTool.m */; };
 		E7F3E9461CDF3A5800491794 /* NightTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E7F3E9441CDF3A5800491794 /* NightTableViewCell.m */; };
 		E7F3E9471CDF3A5800491794 /* NightTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7F3E9451CDF3A5800491794 /* NightTableViewCell.xib */; };
+		E7F3E95F1CE33CF200491794 /* ImageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E7F3E95D1CE33CF200491794 /* ImageTableViewCell.m */; };
+		E7F3E9601CE33CF200491794 /* ImageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7F3E95E1CE33CF200491794 /* ImageTableViewCell.xib */; };
 		E7F4A9961CCB0D25008058EE /* MediaPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E7F4A9951CCB0D25008058EE /* MediaPlayerViewController.m */; };
 		E7F8FF491CC9DA5100C7863E /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F8FF481CC9DA5100C7863E /* MediaPlayer.framework */; };
 /* End PBXBuildFile section */
@@ -324,6 +326,9 @@
 		E7F3E9431CDF3A5800491794 /* NightTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NightTableViewCell.h; path = ../NightTableViewCell.h; sourceTree = "<group>"; };
 		E7F3E9441CDF3A5800491794 /* NightTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NightTableViewCell.m; path = ../NightTableViewCell.m; sourceTree = "<group>"; };
 		E7F3E9451CDF3A5800491794 /* NightTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NightTableViewCell.xib; path = ../NightTableViewCell.xib; sourceTree = "<group>"; };
+		E7F3E95C1CE33CF200491794 /* ImageTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageTableViewCell.h; sourceTree = "<group>"; };
+		E7F3E95D1CE33CF200491794 /* ImageTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageTableViewCell.m; sourceTree = "<group>"; };
+		E7F3E95E1CE33CF200491794 /* ImageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageTableViewCell.xib; sourceTree = "<group>"; };
 		E7F4A9941CCB0D25008058EE /* MediaPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaPlayerViewController.h; sourceTree = "<group>"; };
 		E7F4A9951CCB0D25008058EE /* MediaPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaPlayerViewController.m; sourceTree = "<group>"; };
 		E7F8FF481CC9DA5100C7863E /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
@@ -699,6 +704,9 @@
 				E7D9129C1BC795E5006BE125 /* ADNews.m */,
 				E7D913131BC7BA11006BE125 /* ADNewsTableViewCell.h */,
 				E7D913141BC7BA11006BE125 /* ADNewsTableViewCell.m */,
+				E7F3E95C1CE33CF200491794 /* ImageTableViewCell.h */,
+				E7F3E95D1CE33CF200491794 /* ImageTableViewCell.m */,
+				E7F3E95E1CE33CF200491794 /* ImageTableViewCell.xib */,
 				E7D913191BC950CD006BE125 /* ADNewsDetailController.h */,
 				E7D9131A1BC950CD006BE125 /* ADNewsDetailController.m */,
 				E7D9131C1BCB69B1006BE125 /* SXDetails.css */,
@@ -961,6 +969,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7F3E9601CE33CF200491794 /* ImageTableViewCell.xib in Resources */,
 				E781995A1BCE60CD00D3ECA2 /* NewsURLs.plist in Resources */,
 				E7341BBC1BA556EE00B8BA0A /* 202.png in Resources */,
 				E7F3E9471CDF3A5800491794 /* NightTableViewCell.xib in Resources */,
@@ -1089,6 +1098,7 @@
 				E78199EB1BCF7C8A00D3ECA2 /* MJRefreshBackGifFooter.m in Sources */,
 				E78199EF1BCF7C8A00D3ECA2 /* MJRefreshNormalHeader.m in Sources */,
 				E7D913111BC7AD82006BE125 /* AFURLResponseSerialization.m in Sources */,
+				E7F3E95F1CE33CF200491794 /* ImageTableViewCell.m in Sources */,
 				E73C61761CB64494007BC2B8 /* ADTitleView.m in Sources */,
 				E7819A131BD7E2AD00D3ECA2 /* ADTabBarController.m in Sources */,
 				E7344E141CD9A14B00CC1589 /* UIImage+ImageEffects.m in Sources */,

@@ -54,8 +54,6 @@
         ADNews *news = array[0];
         self.titleLbl.text = news.title;
         
-        //[self.collectionView reloadData];
-        
         //page数量
         self.page.numberOfPages = array.count;
     }

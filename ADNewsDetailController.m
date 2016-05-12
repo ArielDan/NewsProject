@@ -69,31 +69,7 @@
         [_detail setValue:[_detail.img valueForKey:@"ref"] forKey:@"ref"];
 
     
-    
-    //NSLog(@"src::%@",_detail.src);
-    //    [_detail setValue:[news valueForKey:@"title"] forKey:@"title"];
-    //    [_detail setValue:[news valueForKey:@"ptime"] forKey:@"ptime"];
-    //    [_detail setValue:[news valueForKey:@"body"] forKey:@"body"];
-    
     [self showInWebView];
-    //NSLog(@"%@",[news objectForKey:@"ptime"]);
-    //遍历数组
-    //    [news enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-    //
-    //
-    //        [_detail setValue:obj[@"title"] forKey:@"title"];
-    //        [_detail setValue:obj[@"ptime"] forKey:@"ptime"];
-    //        [_detail setValue:obj[@"body"] forKey:@"body"];
-    //
-    //    }];
-    //
-    //
-    //    NSLog(@"%@",_detail.ptime);
-    
-    //    NSDictionary *newBody = [new objectForKey:_getNews];
-    //    NSLog(@"%@",newBody);
-    //    NSString *content = [NSString stringWithFormat:@"%@",[newBody objectForKey:@"body"]];
-    //    NSLog(@"%@",content);
     
     [self.navigationController setNavigationBarHidden:YES animated:YES];
     
@@ -107,7 +83,7 @@
 
     //CGRect bounds = [[UIScreen mainScreen]applicationFrame];
 
-    _webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, self.navigationController.navigationBar.frame.size.height + 20, self.view.frame.size.width, self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height-self.tabBarController.tabBar.frame.size.height)];
+    _webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, self.navigationController.navigationBar.frame.size.height + 20, self.view.frame.size.width, self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height-self.tabBarController.tabBar.frame.size.height-20)];
     [self.view addSubview:_webView];
     _webView.delegate = self;
     
@@ -128,8 +104,6 @@
     [_topView addSubview:back];
     
     [back addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
-    
-    NSLog(@"%@",NSStringFromCGRect(self.navigationController.navigationBar.frame));
 
     
 }

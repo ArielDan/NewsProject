@@ -15,13 +15,12 @@
 #import "MJRefresh.h"
 
 #import "ADNewsTableViewCell.h"
+#import "ImageTableViewCell.h"
 
 #import "GetDataInterfaceJSON.h"
 #import "ADNews.h"
 
 #import "AFNetworking.h"
-
-//#import "SlideView.h"
 
 #import "UIView+Frame.h"
 
@@ -34,8 +33,8 @@
 
 
 static ViewController *instance;
-static NSString *indentifier = @"cell";
-
+static NSString *indentifier = @"commondCell";
+static NSString *extraIndentify = @"extraCell";
 
 @interface ViewController ()<ADTabBarDelegate,ADHeaderViewDelegate>{
     ADNewsDetailController *_newsController;
@@ -74,8 +73,12 @@ static NSString *indentifier = @"cell";
 //头部视图
 @property(nonatomic,strong) ADNewsHeaderView *headerView;
 
+@property(nonatomic,strong) ImageTableViewCell *imageCell;
+@property(nonatomic,strong) ADNewsTableViewCell *cell;
 
 @end
+
+#define kURL @"http://c.m.163.com/nc/article/headline/T1348647853363/0-10.html"
 
 @implementation ViewController
 
@@ -87,38 +90,57 @@ static NSString *indentifier = @"cell";
    
     return _newsLists;
 }
+-(void)viewWillAppear:(BOOL)animated{
+    
+    //异步请求数据
+   // [self loadNewsDataWithMutiThread];
+    [self getNewsData:kURL];
+    
+    self.rightBtn.hidden = NO;
+    self.rightBtn.alpha = 0;
+    [UIView animateWithDuration:0.4 animations:^{
+        self.rightBtn.alpha = 1;
+    }];
+    
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    
+    // 马上进入刷新状态
+    //[self.tableView.header beginRefreshing];
+}
+
+
+-(void)viewWillDisappear:(BOOL)animated{
+    self.rightBtn.hidden = YES;
+    self.rightBtn.transform = CGAffineTransformIdentity;
+    [self.rightBtn setImage:[UIImage imageNamed:@"top_navigation_square"] forState:UIControlStateNormal];
+    
+}
 
 - (void)viewDidLoad {
   
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    instance = self;
-    
-    //self.navigationController.navigationBar.tintColor = [UIColor redColor];
-    
-    _tabCount = 8;
     
     [self layout];
     [self addHeaderView];
-    //[self initSlideWithCount:_tabCount];
-    
-//    _bottomView = [[UIView alloc] init];
-//    
-//    [self.view addSubview:_bottomView];
-//    
-//    _bottomView.x = 0;
     
     _newsController = [[ADNewsDetailController alloc] init];
     //_tabBarController = [[ADTabBarController alloc] init];
     
-    NSString *url = @"http://c.m.163.com/nc/article/headline/T1348647853363/0-10.html";
     
-    [self getNewsData:url];
+    //[self getNewsData:url];
     
     //[self tableRefresh];
     [self setupRefresh];
     [_tableView registerClass:[ADNewsTableViewCell class]  forCellReuseIdentifier:indentifier];
+    [_tableView registerNib:[UINib nibWithNibName:@"ImageTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:extraIndentify];
     
+    //获取一个cell实例
+    _imageCell = [_tableView dequeueReusableCellWithIdentifier:extraIndentify];
+    _cell = [_tableView dequeueReusableCellWithIdentifier:indentifier];
+    
+//    _tableView.estimatedRowHeight = 240;
+//    _tableView.rowHeight = UITableViewAutomaticDimension;
 }
 
 
@@ -131,15 +153,6 @@ static NSString *indentifier = @"cell";
     //进入刷新状态后自动调用
     _tableView.header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         
-        //MJRefreshNormalHeader *normalHeader = [[MJRefreshNormalHeader alloc] init];
-        
-        //[self.view addSubview:normalHeader.arrowView];
-        
-        //normalHeader.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
-        
-        //[_tableView.header endRefreshing];
-        
-        //[_tableView reloadData];
         [self loadData];
         [self.tableView.header endRefreshing];
       
@@ -169,29 +182,9 @@ static NSString *indentifier = @"cell";
     
 }
 -(void)loadData{
-    //NSLog(@"刷新");
+
     [_tableView reloadData];
     [self.tableView.header endRefreshing];
-}
-
--(void)viewWillAppear:(BOOL)animated{
-    self.rightBtn.hidden = NO;
-    self.rightBtn.alpha = 0;
-    [UIView animateWithDuration:0.4 animations:^{
-        self.rightBtn.alpha = 1;
-    }];
-    
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
-    
-    // 马上进入刷新状态
-    //[self.tableView.header beginRefreshing];
-}
-
--(void)viewWillDisappear:(BOOL)animated{
-    self.rightBtn.hidden = YES;
-    self.rightBtn.transform = CGAffineTransformIdentity;
-    [self.rightBtn setImage:[UIImage imageNamed:@"top_navigation_square"] forState:UIControlStateNormal];
-    
 }
 
 -(void)layout{
@@ -272,19 +265,6 @@ static NSString *indentifier = @"cell";
     
 }
 
-//-(void)initSlideWithCount:(NSInteger)count{
-//    
-//    CGRect screenBound = [[UIScreen mainScreen] bounds];
-//    
-//    screenBound.origin.y = 60;
-//    
-//    _slideView = [[SlideView alloc] initWithFrame:screenBound WithCount:count];
-//    
-//    [self.view addSubview:_slideView];
-//    
-//}
-
-
 #pragma mark - 天气信息
 -(void)addWeather{
     
@@ -295,9 +275,6 @@ static NSString *indentifier = @"cell";
     _weatherView = weatherView;
     
     weatherView.alpha = 0.9;
-    
-//    UIWindow *win = [UIApplication sharedApplication].windows.firstObject;
-//    [win addSubview:weatherView];
 
     [self.view insertSubview:weatherView atIndex:1];
     
@@ -338,19 +315,10 @@ static NSString *indentifier = @"cell";
     NSURLRequest *request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:10.0];
     
     NSData *response = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-    
-    //NSString *responseStr = [[NSString alloc] initWithData:response encoding:NSUTF8StringEncoding];
-    
-    //NSLog(@"%@",responseStr);
-    
 
     //使用IOS5自带解析类NSJSONSerialization方法解析
     NSError *error;
     NSDictionary *weatherDic = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:&error];
-//    
-//    NSDictionary *weatherInfo = [weatherDic objectForKey:@"北京|北京"];
-//    
-//    NSLog(@"%@",[weatherInfo objectForKey:@"date"]);
     
     NSArray *dic = [weatherDic objectForKey:@"北京|北京"];
     
@@ -369,22 +337,22 @@ static NSString *indentifier = @"cell";
     [modal setValue:[weatherInfo objectForKey:@"nongli"] forKey:@"nongli"];
     [modal setValue:[weatherInfo objectForKey:@"week"] forKey:@"week"];
     _weatherModal = modal;
-    
-//    NSString *url = @"http://c.3g.163.com/nc/weather/5YyX5LqsfOWMl%2BS6rA%3D%3D.html";
-//    [[SXHTTPManager manager]GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
-//        
-//        ADWeatherModal *weatherModel = [ADWeatherModal objectWithKeyValues:responseObject];
-//        self.weatherModal = weatherModel;
-//        [self addWeather];
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"failure %@",error);
-//    }];
 
     [self addWeather];
     
 }
 
 #pragma mark - 新闻
+
+-(void)loadNewsDataWithMutiThread{
+    
+    //取得全局队列
+    dispatch_queue_t globalQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    //异步执行队列任务
+    dispatch_async(globalQueue, ^{
+        [self getNewsData:kURL];
+    });
+}
 
 -(void)getNewsData:(NSString *)url{
     
@@ -403,8 +371,6 @@ static NSString *indentifier = @"cell";
     [list enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         ADNews *news = [[ADNews alloc] init];
         
-        //NSLog(@"%@",obj[@"title"]);
-        
         [news setValue:obj[@"imgsrc"] forKey:@"imgsrc"];
         [news setValue:obj[@"title"] forKey:@"title"];
         [news setValue:obj[@"digest"] forKey:@"digest"];
@@ -421,11 +387,11 @@ static NSString *indentifier = @"cell";
         
         [_newsDetail addObject:news];
         
-        
-        
         //存储tableViewCell
         ADNewsTableViewCell *cell = [[ADNewsTableViewCell alloc] init];
         [_cellHeight addObject:cell];
+        
+        
     }];
     if (_newsDetail.count == 0) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -438,6 +404,11 @@ static NSString *indentifier = @"cell";
         //取前五个放入头部视图
         NSRange range = NSMakeRange(0, 5);
         self.headerView.array = [_newsDetail subarrayWithRange:range];
+        //更新UI界面，调用GCD主线程队列的方法
+//        dispatch_queue_t mainQueue = dispatch_get_main_queue();
+//        dispatch_sync(mainQueue, ^{
+//            [self.tableView reloadData];
+//        });
         //self.headerView.array = _newsDetail;
     }
    
@@ -510,16 +481,21 @@ static NSString *indentifier = @"cell";
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    
-    ADNewsTableViewCell *cell = [_tableView dequeueReusableCellWithIdentifier:indentifier forIndexPath:indexPath];
-    if (cell == nil){
-        cell = [[ADNewsTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indentifier];
+   // NSLog(@"%@",[_newsDetail valueForKey:@"imgextra"]);
+    if ([_newsDetail[indexPath.row] valueForKey:@"imgextra"] != nil ) {
+        ImageTableViewCell *imageCell = [_tableView dequeueReusableCellWithIdentifier:extraIndentify forIndexPath:indexPath];
         
+        imageCell.news = _newsDetail[indexPath.row];
+        
+        return imageCell;
+    }else{
+        ADNewsTableViewCell *cell = [_tableView dequeueReusableCellWithIdentifier:indentifier forIndexPath:indexPath];
+        
+        cell.news = _newsDetail[indexPath.row];
+        
+        return  cell;
     }
-    cell.news = _newsDetail[indexPath.row];
-
-    return  cell;
+    
 
 }
 
@@ -540,13 +516,27 @@ static NSString *indentifier = @"cell";
 
 
 #pragma mark - tableView代理方法,单元格高度
-
+//
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    ADNewsTableViewCell *cell = _cellHeight[indexPath.row];
-    cell.news = _newsDetail[indexPath.row];
-    return cell.height;
+    if ([_newsDetail[indexPath.row] valueForKey:@"imgextra"] != nil ){
+        //ImageTableViewCell *imageCell = _newsDetail[indexPath.row];
+        //_imageCell.news = _newsDetail[indexPath.row];
+        CGSize size = [_imageCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+        NSLog(@"size:%f",size.height);
+        return size.height + 1;
+    }else{
+        //ADNewsTableViewCell *cell = _newsDetail[indexPath.row];
+        _cell.news = _newsDetail[indexPath.row];
+        NSLog(@"%f",_cell.height);
+        
+        return _cell.height;
+    }
+    
 }
 
+-(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 240.f;
+}
 
 
 
