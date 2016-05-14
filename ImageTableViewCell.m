@@ -42,6 +42,7 @@
 //    CGFloat replyH = kReplyHeight;
 //    
 //    _readedNum.frame = CGRectMake(replyX, replyY, replyW, replyH);
+    self.dk_backgroundColorPicker = DKColorPickerWithKey(BG);
     _readedNum.textColor = [UIColor lightGrayColor];
     
     _readedNum.font = [UIFont systemFontOfSize:10];

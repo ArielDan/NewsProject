@@ -57,6 +57,7 @@ static NSString *extraIndentify = @"extraCell";
 @property(assign) NSInteger tabCount;
 
 @property(strong,nonatomic) UIButton *rightBtn;
+@property(nonatomic,strong) UIBarButtonItem *rightItem;
 
 @property(strong,nonatomic) UIImageView *tran;
 
@@ -135,14 +136,49 @@ static NSString *extraIndentify = @"extraCell";
     [_tableView registerClass:[ADNewsTableViewCell class]  forCellReuseIdentifier:indentifier];
     [_tableView registerNib:[UINib nibWithNibName:@"ImageTableViewCell" bundle:[NSBundle mainBundle]] forCellReuseIdentifier:extraIndentify];
     
-    //获取一个cell实例
+    //获取cell实例
     _imageCell = [_tableView dequeueReusableCellWithIdentifier:extraIndentify];
     _cell = [_tableView dequeueReusableCellWithIdentifier:indentifier];
-    
+
+    //添加约束后代替高度的代理方法
 //    _tableView.estimatedRowHeight = 240;
 //    _tableView.rowHeight = UITableViewAutomaticDimension;
 }
 
+-(void)layout{
+    
+    _newsDetail = [[NSMutableArray alloc] init];
+    
+    _cellHeight = [[NSMutableArray alloc] init];
+    
+    self.rightBtn = [[UIButton alloc]init];
+    
+//    UIWindow *win = [UIApplication sharedApplication].windows.firstObject;
+//
+//    [win addSubview:_rightBtn];
+//    
+//    [self.view addSubview:_rightBtn];
+//    
+//    self.rightBtn.y = 20;
+//    self.rightBtn.width = 45;
+//    self.rightBtn.height = 45;
+//    self.rightBtn.x = [UIScreen mainScreen].bounds.size.width - self.rightBtn.width;
+    
+    self.rightBtn.frame = CGRectMake([UIScreen mainScreen].bounds.size.width  - _rightBtn.width, 10, 45, 45);
+    //[self.rightBtn setTitle:@"+" forState:UIControlStateNormal];
+    [self.rightBtn setImage:[UIImage imageNamed:@"top_navigation_square"] forState:UIControlStateNormal];
+    [self.rightBtn addTarget:self action:@selector(rightBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:self.rightBtn];
+    _rightItem = rightItem;
+    self.navigationItem.rightBarButtonItem = rightItem;
+    
+    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
+    _tableView.delegate = self;
+    _tableView.dataSource = self;
+    
+    [self.view addSubview:_tableView];
+}
 
 #pragma mark - 数据刷新
 -(void)setupRefresh{
@@ -155,8 +191,7 @@ static NSString *extraIndentify = @"extraCell";
         
         [self loadData];
         [self.tableView.header endRefreshing];
-      
-        //NSLog(@"%@",NSStringFromUIEdgeInsets(_tableView.contentInset));
+
     }];
     //自动切换透明度
     _tableView.header.automaticallyChangeAlpha = YES;
@@ -169,11 +204,23 @@ static NSString *extraIndentify = @"extraCell";
         
         [self loadMoreData:url];
         
-       // NSLog(@"上拉刷新");
-        
         temp = temp + 10;
         
     }];
+}
+
+#pragma mark - 添加头部视图
+-(void)addHeaderView{
+    ADNewsHeaderView *headerView = [[ADNewsHeaderView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.navigationController.navigationBar.frame), self.view.width, kHeaderViewH)];
+    headerView.delegate = self;
+    self.tableView.tableHeaderView = headerView;
+    self.headerView = headerView;
+    
+}
+#pragma mark 头部视图的代理方法
+#warning 头部视图代理方法--点击
+-(void)headerView:(ADNewsHeaderView *)headerView news:(ADNews *)news{
+    
 }
 
 -(void)loadMoreData:(NSString *)url{
@@ -187,49 +234,7 @@ static NSString *extraIndentify = @"extraCell";
     [self.tableView.header endRefreshing];
 }
 
--(void)layout{
-    
-    _newsDetail = [[NSMutableArray alloc] init];
-    
-    _cellHeight = [[NSMutableArray alloc] init];
-    
-    self.rightBtn = [[UIButton alloc]init];
-    
-//    UIWindow *win = [UIApplication sharedApplication].windows.firstObject;
-//    
-//    [win addSubview:_rightBtn];
-
-    //[self.view addSubview:_rightBtn];
-    self.rightBtn.frame = CGRectMake([UIScreen mainScreen].bounds.size.width  - _rightBtn.width, 10, 50, 50);
-    //[self.rightBtn setTitle:@"+" forState:UIControlStateNormal];
-    [self.rightBtn setImage:[UIImage imageNamed:@"top_navigation_square"] forState:UIControlStateNormal];
-    [self.rightBtn addTarget:self action:@selector(rightBtnClick) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc] initWithCustomView:self.rightBtn];
-    
-    self.navigationItem.rightBarButtonItem = rightItem;
-    
-    _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) style:UITableViewStylePlain];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    
-    [self.view addSubview:_tableView];
-}
-
-#pragma mark - 添加头部视图
--(void)addHeaderView{
-    ADNewsHeaderView *headerView = [[ADNewsHeaderView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, kHeaderViewH)];
-    headerView.delegate = self;
-    self.tableView.tableHeaderView = headerView;
-    self.headerView = headerView;
-    
-}
-#pragma mark 头部视图的代理方法
-#warning 头部视图代理方法--点击
--(void)headerView:(ADNewsHeaderView *)headerView news:(ADNews *)news{
-    
-}
-
+#pragma mark- 导航栏右键点击
 -(void)rightBtnClick{
     
     if (self.isWeatherShow) {
@@ -304,7 +309,7 @@ static NSString *extraIndentify = @"extraCell";
 
 //http://c.3g.163.com/nc/weather/5YyX5LqsfOWMl%2BS6rA%3D%3D.html
 
-
+#pragma mark 获取天气数据
 -(void)getWeather{
     NSString *path = @"http://c.3g.163.com/nc/weather/5YyX5LqsfOWMl%2BS6rA%3D%3D.html";
     
@@ -516,18 +521,17 @@ static NSString *extraIndentify = @"extraCell";
 
 
 #pragma mark - tableView代理方法,单元格高度
-//
+
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if ([_newsDetail[indexPath.row] valueForKey:@"imgextra"] != nil ){
         //ImageTableViewCell *imageCell = _newsDetail[indexPath.row];
         //_imageCell.news = _newsDetail[indexPath.row];
         CGSize size = [_imageCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
-        NSLog(@"size:%f",size.height);
+        
         return size.height + 1;
     }else{
         //ADNewsTableViewCell *cell = _newsDetail[indexPath.row];
         _cell.news = _newsDetail[indexPath.row];
-        NSLog(@"%f",_cell.height);
         
         return _cell.height;
     }

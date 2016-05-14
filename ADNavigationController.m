@@ -54,15 +54,6 @@ static ADNavigationController *instance;
     
 }
 -(void)viewDidLoad{
-    instance = self;
-//    ADNavigationBar *navBar = [[ADNavigationBar alloc] initWithFrame:self.navigationBar.frame];
-//    navBar.transDelegate = self;
-//    [self.view addSubview:navBar];
-//    self.navBar = navBar;
-    
-    
-    
-   
     //定义block
    // __weak typeof(ADNavigationController) *weakSelf = self;
 //    self.hideTitleViewBlock = ^(){
@@ -112,8 +103,7 @@ static ADNavigationController *instance;
     //    CGAffineTransform scaleform = CGAffineTransformMakeScale(0.5, 0.5);//缩放
     //    CGAffineTransform anim = CGAffineTransformTranslate(scaleform, -80, 0);//平移
     //    _leftMenu.transform = anim;
-    
-    
+        
     [UIView animateWithDuration:0.25 animations:^{
         
         //调回左边菜单的动画属性

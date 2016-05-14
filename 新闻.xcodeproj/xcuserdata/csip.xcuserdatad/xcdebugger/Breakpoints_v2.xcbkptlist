@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "090506&#x4eff;&#x5934;&#x6761;/ViewController.m"
-            timestampString = "484730598.626375"
+            timestampString = "484741317.180718"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "271"
-            endingLineNumber = "271"
+            startingLineNumber = "276"
+            endingLineNumber = "276"
             landmarkName = "-addWeather"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "090506&#x4eff;&#x5934;&#x6761;/ViewController.m"
-            timestampString = "484730598.626375"
+            timestampString = "484741317.180718"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "273"
-            endingLineNumber = "273"
+            startingLineNumber = "278"
+            endingLineNumber = "278"
             landmarkName = "-addWeather"
             landmarkType = "5">
          </BreakpointContent>
